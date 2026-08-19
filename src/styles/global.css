@@ -1,0 +1,132 @@
+:root {
+  --color-bg: #0f0b1e;
+  --color-bg-alt: #171129;
+  --color-surface: #1e1836;
+  --color-border: #322a52;
+  --color-text: #f1eefc;
+  --color-text-muted: #a99fc9;
+
+  --color-accent-1: #ff5f7e;
+  --color-accent-2: #7c5cff;
+  --color-accent-3: #3fd9c7;
+
+  --gradient-brand: linear-gradient(135deg, var(--color-accent-1) 0%, var(--color-accent-2) 55%, var(--color-accent-3) 100%);
+
+  --font-heading: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-glow: 0 8px 30px rgba(124, 92, 255, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(124, 92, 255, 0.25), transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(255, 95, 126, 0.18), transparent 45%);
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.75em 1.5em;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--gradient-brand);
+  color: #100a1f;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.15);
+  color: var(--color-accent-3);
+  border: 1px solid rgba(63, 217, 199, 0.3);
+}
+
+.badge--dev {
+  background: rgba(255, 95, 126, 0.12);
+  color: var(--color-accent-1);
+  border-color: rgba(255, 95, 126, 0.3);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 2.5rem 0;
+  }
+}

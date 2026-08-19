@@ -1,0 +1,16 @@
+# Stack de DEV LOCAL uniquement — exactement comme pour skillforge, la prod ne
+# passe pas par ce fichier mais par le cluster k3s (voir k8s/ et
+# .github/workflows/deploy.yml). Ceci sert juste à tester l'image Docker en
+# local avant de pousser sur main.
+services:
+  vitrine:
+    build: .
+    container_name: mbadet-vitrine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=4321
+      - HOST=0.0.0.0
+    ports:
+      - '127.0.0.1:4321:4321'

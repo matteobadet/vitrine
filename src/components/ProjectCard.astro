@@ -1,0 +1,84 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  url: string;
+  status: 'live' | 'dev';
+  tags: string[];
+}
+
+const { name, description, url, status, tags } = Astro.props;
+const statusLabel = status === 'live' ? 'En ligne' : 'En développement';
+---
+
+<a href={url} class="project-card" target="_blank" rel="noopener noreferrer">
+  <div class="card-top">
+    <h3>{name}</h3>
+    <span class:list={['badge', { 'badge--dev': status === 'dev' }]}>{statusLabel}</span>
+  </div>
+  <p>{description}</p>
+  <div class="tags">
+    {tags.map((tag) => <span class="tag">{tag}</span>)}
+  </div>
+  <span class="card-cta">Voir le projet →</span>
+</a>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent-2);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .card-top h3 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
+  }
+
+  .card-cta {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+</style>

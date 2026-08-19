@@ -1,0 +1,147 @@
+---
+export const prerender = true;
+
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import portrait from '../assets/matteo.jpg';
+
+// Contenu codé en dur — à mettre à jour ici puis redéployer.
+const projects = [
+  {
+    name: 'RandoHost',
+    description:
+      'TODO : décrire RandoHost en une phrase (ce que ça fait, pour qui).',
+    url: 'https://TODO-lien-randohost.example',
+    status: 'dev' as const,
+    tags: ['TODO'],
+  },
+  {
+    name: 'CycloTrack',
+    description:
+      'TODO : décrire CycloTrack en une phrase (ce que ça fait, pour qui).',
+    url: 'https://TODO-lien-cyclotrack.example',
+    status: 'dev' as const,
+    tags: ['TODO'],
+  },
+  {
+    name: 'SkillForge',
+    description:
+      'TODO : décrire SkillForge en une phrase (ce que ça fait, pour qui).',
+    url: 'https://TODO-lien-skillforge.example',
+    status: 'live' as const,
+    tags: ['TODO'],
+  },
+  {
+    name: 'ScrumMaster',
+    description:
+      'TODO : décrire ScrumMaster en une phrase (ce que ça fait, pour qui).',
+    url: 'https://TODO-lien-scrummaster.example',
+    status: 'dev' as const,
+    tags: ['TODO'],
+  },
+];
+---
+
+<Layout
+  title="Accueil"
+  description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster."
+>
+  <section class="section hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>
+          Bonjour, je suis <span class="gradient-text">Matteo Badet</span>
+        </h1>
+        <p class="hero-subtitle">
+          Développeur fullstack — C# / .NET côté API, TypeScript / Angular
+          (Nx) côté front. <!-- TODO : compléter avec une accroche plus personnelle si besoin -->
+        </p>
+        <div class="hero-actions">
+          <a href="/contact" class="btn btn-primary">Me contacter</a>
+          <a href="/a-propos" class="btn btn-secondary">À propos de moi</a>
+        </div>
+      </div>
+      <Image
+        src={portrait}
+        alt="Portrait de Matteo Badet"
+        width={280}
+        height={280}
+        class="hero-portrait"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Mes projets</h2>
+      <div class="project-grid">
+        {projects.map((project) => <ProjectCard {...project} />)}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-portrait {
+    width: 220px;
+    height: 220px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-glow);
+    justify-self: end;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    max-width: 20ch;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    max-width: 55ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 720px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-portrait {
+      justify-self: center;
+      order: -1;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+  }
+</style>

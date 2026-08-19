@@ -1,0 +1,39 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© {year} Matteo Badet. Tous droits réservés.</p>
+    <div class="footer-links">
+      <a href="mailto:contact@mbadet.fr">contact@mbadet.fr</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    margin-top: 4rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 2rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-text);
+  }
+</style>

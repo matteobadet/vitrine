@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.DS_Store
+.astro/
+
+# Ne jamais committer un manifeste de secret rempli avec de vraies valeurs
+k8s/secret-resend.yaml

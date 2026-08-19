@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mbadet-vitrine
+  namespace: default # TODO: aligner sur le namespace réellement utilisé par skillforge si différent
+spec:
+  selector:
+    app: mbadet-vitrine
+  ports:
+    - port: 80
+      targetPort: 4321
