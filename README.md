@@ -57,19 +57,23 @@ Services internes, et cert-manager gère les certificats Let's Encrypt via le
 `ClusterIssuer` `letsencrypt-prod` déjà en place pour skillforge — les
 manifestes réutilisent donc directement ce même issuer.
 
-**À adapter avant le premier déploiement** (marqué `TODO` dans les fichiers) :
-- `k8s/deployment.yaml`, `k8s/service.yaml`, `k8s/ingress.yaml` : le
-  `namespace: default` — remplacer si skillforge tourne dans un namespace dédié.
-- `.github/workflows/deploy.yml` : le `-n default` dans l'étape de déploiement,
-  à aligner sur le même namespace que ci-dessus.
+skillforge tourne dans son propre namespace `skillforge` (pas `default`) ;
+mbadet-vitrine a donc son propre namespace dédié `mbadet-vitrine`, à créer une
+fois :
+
+```bash
+kubectl create namespace mbadet-vitrine
+```
 
 ### 1. Secrets GitHub Actions
 
 Dans les settings du repo GitHub (Settings → Secrets and variables → Actions) :
 
 - `KUBE_CONFIG` — le kubeconfig du cluster k3s, encodé en base64
-  (`cat ~/.kube/config | base64 -w0`). `GITHUB_TOKEN` (pour pousser sur GHCR)
-  est fourni automatiquement, rien à ajouter.
+  (`sudo cat /etc/rancher/k3s/k3s.yaml | base64 -w0` sur le VPS — l'IP du
+  cluster dans ce fichier doit rester joignable depuis les runners GitHub).
+  `GITHUB_TOKEN` (pour pousser sur GHCR) est fourni automatiquement, rien à
+  ajouter.
 
 ### 2. Créer le Secret Resend dans le cluster (une seule fois)
 
@@ -78,7 +82,7 @@ dans le cluster :
 
 ```bash
 kubectl create secret generic mbadet-vitrine-resend \
-  -n default \
+  -n mbadet-vitrine \
   --from-literal=RESEND_API_KEY=<votre_clé_resend> \
   --from-literal=CONTACT_EMAIL_TO=contact@mbadet.fr \
   --from-literal=CONTACT_EMAIL_FROM='Contact mbadet.fr <contact@mbadet.fr>'

@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mbadet-vitrine
-  namespace: default # TODO: aligner sur le namespace réellement utilisé par skillforge si différent
+  namespace: mbadet-vitrine
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:

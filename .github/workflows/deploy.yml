@@ -41,4 +41,4 @@ jobs:
         run: |
           sed -i "s|ghcr.io/${{ github.repository_owner }}/mbadet-vitrine:latest|ghcr.io/${{ github.repository_owner }}/mbadet-vitrine:${{ github.sha }}|" k8s/deployment.yaml
           kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml -f k8s/ingress.yaml
-          kubectl rollout status deployment/mbadet-vitrine -n default
+          kubectl rollout status deployment/mbadet-vitrine -n mbadet-vitrine
