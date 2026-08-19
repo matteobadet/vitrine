@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build-and-deploy:
@@ -37,9 +37,8 @@ jobs:
           mkdir -p "$HOME/.kube"
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > "$HOME/.kube/config"
 
-      - name: Deploy new image
+      - name: Apply manifests (creates on first run, updates otherwise)
         run: |
-          kubectl set image deployment/mbadet-vitrine \
-            vitrine=ghcr.io/${{ github.repository_owner }}/mbadet-vitrine:${{ github.sha }} \
-            -n default
+          sed -i "s|ghcr.io/${{ github.repository_owner }}/mbadet-vitrine:latest|ghcr.io/${{ github.repository_owner }}/mbadet-vitrine:${{ github.sha }}|" k8s/deployment.yaml
+          kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml -f k8s/ingress.yaml
           kubectl rollout status deployment/mbadet-vitrine -n default

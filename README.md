@@ -86,10 +86,12 @@ kubectl create secret generic mbadet-vitrine-resend \
 
 (La clé réelle vous a été communiquée en dehors de ce dépôt — la coller
 uniquement dans cette commande exécutée localement contre le cluster, jamais
-dans un fichier versionné.)
+dans un fichier versionné. `k8s/secret-resend.example.yaml` ne documente que
+la forme attendue, à ne pas remplir avec la vraie clé.)
 
-(`k8s/secret-resend.example.yaml` documente juste la forme attendue — ne pas
-le remplir avec la vraie clé.)
+Ce Secret doit exister **avant** le premier déploiement CI, sinon les pods
+resteront bloqués en `CreateContainerConfigError` faute de variables
+d'environnement.
 
 ### 3. DNS
 
@@ -97,19 +99,16 @@ Pointer `mbadet.fr` et `www.mbadet.fr` (enregistrements A/AAAA) vers la même
 IP publique que `skillforge.mbadet.fr`, puisque Traefik route par nom d'hôte
 sur ce même cluster.
 
-### 4. Premier déploiement manuel
+### 4. Déploiement (premier et suivants)
 
-```bash
-kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml -f k8s/ingress.yaml
-kubectl rollout status deployment/mbadet-vitrine -n default
-```
-
-### 5. Déploiements suivants
-
-Automatiques : chaque push sur `main` déclenche
-[.github/workflows/deploy.yml](.github/workflows/deploy.yml), qui build
-l'image, la pousse sur GHCR, puis fait un `kubectl set image` + rollout sur le
-Deployment (même mécanique que le workflow de skillforge).
+Aucune commande `kubectl apply` manuelle n'est nécessaire : chaque push sur
+`master` déclenche [.github/workflows/deploy.yml](.github/workflows/deploy.yml),
+qui build l'image, la pousse sur GHCR, puis fait un `kubectl apply` des trois
+manifestes (`deployment.yaml`, `service.yaml`, `ingress.yaml`) avec le tag
+d'image du commit. `kubectl apply` étant idempotent, ce même step crée les
+objets s'ils n'existent pas encore et les met à jour sinon — donc le tout
+premier push (une fois le Secret Resend et `KUBE_CONFIG` en place) suffit à
+la fois à créer le déploiement et à publier chaque mise à jour ultérieure.
 
 ## Dev local avec Docker (optionnel)
 
