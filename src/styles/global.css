@@ -114,6 +114,8 @@ a {
   text-transform: uppercase;
   padding: 0.3em 0.8em;
   border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
   background: rgba(124, 92, 255, 0.15);
   color: var(--color-accent-3);
   border: 1px solid rgba(63, 217, 199, 0.3);
