@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>CV — Matteo Badet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap');
+
+  @page {
+    size: A4;
+    margin: 15mm 20mm;
+  }
+
+  :root {
+    --ink: #1c1830;
+    --muted: #6a6480;
+    --line: #e5e1f0;
+    --accent-1: #ff5f7e;
+    --accent-2: #7c5cff;
+    --accent-3: #17a897;
+    --tint: #f4f2fb;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    font-size: 9.4pt;
+    line-height: 1.4;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Sora', sans-serif;
+    margin: 0;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 6pt;
+    border-bottom: 2.5pt solid var(--ink);
+    margin-bottom: 10pt;
+  }
+
+  h1 {
+    font-size: 26pt;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span {
+    background: linear-gradient(100deg, var(--accent-1), var(--accent-2) 60%, var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tagline {
+    font-size: 12pt;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 3pt;
+  }
+
+  .contact {
+    text-align: right;
+    font-size: 8.6pt;
+    color: var(--muted);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  .contact a { color: var(--ink); text-decoration: none; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 68mm 1fr;
+    gap: 14mm;
+  }
+
+  section { margin-bottom: 9pt; }
+
+  h2 {
+    font-size: 10.2pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-2);
+    margin-bottom: 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 1pt solid var(--line);
+  }
+
+  /* left column */
+  .skills { display: flex; flex-wrap: wrap; gap: 6pt; }
+  .pill {
+    font-size: 9pt;
+    font-weight: 500;
+    padding: 4pt 9pt;
+    border-radius: 999px;
+    background: var(--tint);
+    border: 0.5pt solid var(--line);
+    color: var(--ink);
+  }
+
+  .edu-entry, .hobby { margin-bottom: 10pt; }
+  .edu-entry:last-child { margin-bottom: 0; }
+  .edu-title { font-weight: 600; font-size: 10.2pt; margin-top: 1pt; }
+  .edu-place { color: var(--muted); font-size: 9.6pt; }
+  .edu-date { color: var(--accent-3); font-size: 8.8pt; font-weight: 600; margin-bottom: 2pt; }
+
+  .hobbies { color: var(--muted); font-size: 9.8pt; line-height: 1.8; }
+
+  /* right column */
+  .profile { font-size: 10.4pt; color: var(--ink); }
+
+  .job { margin-bottom: 6pt; }
+  .job { break-inside: avoid; }
+  .job:last-child { margin-bottom: 0; }
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+  }
+  .job-title { font-weight: 700; font-size: 10.6pt; }
+  .job-place { color: var(--muted); font-size: 9.5pt; margin-top: 1pt; }
+  .job-date { font-size: 8.8pt; font-weight: 600; color: var(--accent-3); white-space: nowrap; }
+  .job-desc { font-size: 9.5pt; color: var(--muted); margin-top: 4pt; }
+  .job-list {
+    margin: 3pt 0 0;
+    padding-left: 13pt;
+    font-size: 9pt;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+  .job-list li { margin-bottom: 2pt; }
+  .job-list li:last-child { margin-bottom: 0; }
+  .job-list strong { color: var(--ink); font-weight: 600; }
+
+  .projects { display: flex; flex-wrap: wrap; gap: 6pt; }
+  .project {
+    width: calc(50% - 3pt);
+    border: 0.5pt solid var(--line);
+    border-radius: 8pt;
+    padding: 6pt 8pt;
+    background: var(--tint);
+  }
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4pt;
+    margin-bottom: 3pt;
+  }
+  .project-name { font-weight: 700; font-size: 9.5pt; }
+  .project-status {
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--accent-3);
+    white-space: nowrap;
+  }
+  .project-desc { font-size: 8.3pt; color: var(--muted); margin-bottom: 4pt; line-height: 1.35; }
+  .project-link { font-size: 8.5pt; color: var(--accent-2); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Matteo <span>Badet</span></h1>
+      <div class="tagline">Développeur Fullstack — C# / .NET · TypeScript / Angular</div>
+    </div>
+    <div class="contact">
+      matteobadet@gmail.com · 06 51 46 70 56<br />
+      Dijon, France<br />
+      mbadet.fr · <a href="https://www.linkedin.com/in/mattéo-badet-7b3137235/">LinkedIn</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Left column -->
+    <div>
+      <section>
+        <h2>Compétences</h2>
+        <div class="skills">
+          <span class="pill">C# / .NET</span>
+          <span class="pill">ASP.NET Core</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Angular</span>
+          <span class="pill">Nx (monorepo)</span>
+          <span class="pill">SQL Server</span>
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">Docker</span>
+          <span class="pill">Kubernetes</span>
+          <span class="pill">Méthodes agiles</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Formation</h2>
+        <div class="edu-entry">
+          <div class="edu-date">2021 — 2024</div>
+          <div class="edu-title">BUT Informatique</div>
+          <div class="edu-place">IUT Dijon-Auxerre-Nevers</div>
+        </div>
+        <div class="edu-entry">
+          <div class="edu-date">2018 — 2021</div>
+          <div class="edu-title">Baccalauréat, spécialité NSI/SI</div>
+          <div class="edu-place">Lycée Gustave Eiffel, Dijon</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Centres d'intérêt</h2>
+        <div class="hobbies">Nouvelles technologies (IA, AR/VR) · Jeux vidéo · Badminton</div>
+      </section>
+    </div>
+
+    <!-- Right column -->
+    <div>
+      <section>
+        <h2>Profil</h2>
+        <p class="profile">
+          Développeur back-end chez YMAG (Dijon), diplômé d'un BUT Informatique à
+          l'IUT Dijon-Auxerre-Nevers. Passionné de nouvelles technologies et de
+          développement de projets personnels de bout en bout — de la conception
+          à un déploiement réel en production (Kubernetes, CI/CD).
+        </p>
+      </section>
+
+      <section>
+        <h2>Expérience</h2>
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Développeur back-end</span>
+            <span class="job-date">juil. 2023 — aujourd'hui</span>
+          </div>
+          <div class="job-place">YMAG, Dijon — CDD puis alternance puis CDI</div>
+          <ul class="job-list">
+            <li>Développement de <strong>Yparéo</strong>, ERP dédié aux organismes de formation, en Delphi.</li>
+            <li>Développement de <strong>Yparéo NEO</strong>, le successeur d'Yparéo : back-end C# / .NET en Clean Architecture avec SQL Server, front-end TypeScript / Angular en monorepo Nx.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Stagiaire développement web</span>
+            <span class="job-date">mai 2023 — juil. 2023</span>
+          </div>
+          <div class="job-place">AIST 21, Dijon</div>
+          <div class="job-desc">
+            Création de deux applications web en suivant des cahiers des charges
+            (HTML/CSS/PHP/Python).
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Projets personnels</h2>
+        <div class="projects">
+          <div class="project">
+            <div class="project-head">
+              <span class="project-name">SkillForge</span>
+              <span class="project-status">En ligne</span>
+            </div>
+            <div class="project-desc">Plateforme auto-hébergée pour partager des Skills, MCP et Agents Claude entre amis.</div>
+            <a class="project-link" href="https://skillforge.mbadet.fr">skillforge.mbadet.fr</a>
+          </div>
+          <div class="project">
+            <div class="project-head">
+              <span class="project-name">RandoHost</span>
+              <span class="project-status">En ligne</span>
+            </div>
+            <div class="project-desc">Gestion de médias géolocalisés pour randonneurs, carte interactive et partage par groupe.</div>
+            <a class="project-link" href="https://randohost.mbadet.fr">randohost.mbadet.fr</a>
+          </div>
+          <div class="project">
+            <div class="project-head">
+              <span class="project-name">CycloTrack</span>
+              <span class="project-status">En ligne</span>
+            </div>
+            <div class="project-desc">Suivi d'activités vélo avec coaching par IA — mobile, web et API dédiée.</div>
+            <a class="project-link" href="https://cyclotrack.mbadet.fr">cyclotrack.mbadet.fr</a>
+          </div>
+          <div class="project">
+            <div class="project-head">
+              <span class="project-name">ScrumMaster</span>
+              <span class="project-status">En ligne</span>
+            </div>
+            <div class="project-desc">Outil de facilitation agile intégré à Microsoft Teams, connecté à Azure DevOps.</div>
+            <a class="project-link" href="https://scrummaster.mbadet.fr">scrummaster.mbadet.fr</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</body>
+</html>
