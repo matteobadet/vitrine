@@ -40,12 +40,20 @@ const projects = [
     status: 'live' as const,
     tags: ['C#', 'Microsoft Teams', 'Azure DevOps'],
   },
+  {
+    name: 'ApexGrid',
+    description:
+      'Simulateur de course top-down où les voitures sont pilotées uniquement par des scripts externes via un protocole TCP/WebSocket documenté.',
+    url: 'https://apexgrid.mbadet.fr',
+    status: 'dev' as const,
+    tags: ['TypeScript', 'Node.js', 'WebSocket'],
+  },
 ];
 ---
 
 <Layout
   title="Accueil"
-  description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster."
+  description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster, ApexGrid."
 >
   <section class="section hero">
     <div class="container hero-grid">
