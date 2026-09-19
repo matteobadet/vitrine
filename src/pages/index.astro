@@ -45,15 +45,23 @@ const projects = [
     description:
       'Simulateur de course top-down où les voitures sont pilotées uniquement par des scripts externes via un protocole TCP/WebSocket documenté.',
     url: 'https://apexgrid.mbadet.fr',
-    status: 'dev' as const,
+    status: 'live' as const,
     tags: ['TypeScript', 'Node.js', 'WebSocket'],
+  },
+  {
+    name: 'Arya Hub',
+    description:
+      'Tableau de bord d’équipe pour piloter des agents Claude Code sur des projets réels — sessions en direct, approbations humaines, intégration Azure DevOps (work items, PR, pipelines).',
+    url: 'https://aryahub.mbadet.fr',
+    status: 'live' as const,
+    tags: ['Angular', 'Fastify', 'PostgreSQL', 'Claude Agent SDK'],
   },
 ];
 ---
 
 <Layout
   title="Accueil"
-  description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster, ApexGrid."
+  description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster, ApexGrid, Arya Hub."
 >
   <section class="section hero">
     <div class="container hero-grid">
