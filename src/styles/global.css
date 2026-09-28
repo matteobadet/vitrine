@@ -5,11 +5,11 @@
   --color-ink: #1c1a22;
   --color-muted: #6d6a76;
 
-  --color-primary: #4638ff;
+  --color-primary: #2f6b4f;
   --color-primary-ink: #ffffff;
-  --color-coral: #ff5d5d;
-  --color-emerald: #12b886;
-  --color-amber: #ffab2e;
+  --color-terracotta: #d97a4d;
+  --color-sky: #3a8fd9;
+  --color-amber: #e0a83a;
 
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -18,7 +18,7 @@
   --radius-lg: 20px;
 
   --shadow-soft: 0 14px 30px -14px rgba(28, 26, 34, 0.18);
-  --shadow-primary: 0 10px 24px -8px rgba(70, 56, 255, 0.45);
+  --shadow-primary: 0 10px 24px -8px rgba(47, 107, 79, 0.4);
 }
 
 * {
@@ -111,7 +111,7 @@ a {
 }
 
 .btn-primary:hover {
-  background: #3a2fe0;
+  background: #255943;
 }
 
 .btn-secondary {
@@ -183,7 +183,7 @@ a {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--color-emerald);
+  background: var(--color-primary);
 }
 
 .status--dev::before {

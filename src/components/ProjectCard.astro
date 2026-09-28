@@ -5,7 +5,7 @@ interface Props {
   url: string;
   status: 'live' | 'dev';
   tags: string[];
-  accent: 'coral' | 'emerald' | 'amber' | 'primary';
+  accent: 'terracotta' | 'sky' | 'amber' | 'primary';
 }
 
 const { name, description, url, status, tags, accent } = Astro.props;
@@ -42,8 +42,8 @@ const initial = name.charAt(0);
     height: 100%;
   }
 
-  .project-card.accent-coral { --card-accent: var(--color-coral); }
-  .project-card.accent-emerald { --card-accent: var(--color-emerald); }
+  .project-card.accent-terracotta { --card-accent: var(--color-terracotta); }
+  .project-card.accent-sky { --card-accent: var(--color-sky); }
   .project-card.accent-amber { --card-accent: var(--color-amber); }
   .project-card.accent-primary { --card-accent: var(--color-primary); }
 
