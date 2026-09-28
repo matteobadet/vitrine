@@ -57,14 +57,16 @@ const timeline = [
 >
   <section class="section">
     <div class="container intro-grid">
-      <Image
-        src={portrait}
-        alt="Portrait de Matteo Badet"
-        width={320}
-        height={320}
-        class="portrait"
-      />
-      <div>
+      <div class="reveal">
+        <Image
+          src={portrait}
+          alt="Portrait de Matteo Badet"
+          width={320}
+          height={320}
+          class="portrait"
+        />
+      </div>
+      <div class="reveal" style="transition-delay: 0.1s">
         <h1>À propos</h1>
         <p class="bio">
           Développeur back-end chez YMAG, à Dijon, après un BUT Informatique à
@@ -79,20 +81,23 @@ const timeline = [
 
   <section class="section">
     <div class="container">
-      <h2>Compétences</h2>
+      <p class="eyebrow reveal">Stack</p>
+      <h2 class="reveal">Compétences</h2>
       <ul class="skills-list">
-        {skills.map((skill) => <li>{skill}</li>)}
+        {skills.map((skill, i) => <li class="reveal" style={`transition-delay: ${Math.min(i, 6) * 0.06}s`}>{skill}</li>)}
       </ul>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <h2>Parcours</h2>
+      <p class="eyebrow reveal">Depuis 2021</p>
+      <h2 class="reveal">Parcours</h2>
       <ol class="timeline">
         {
-          timeline.map((entry) => (
-            <li>
+          timeline.map((entry, i) => (
+            <li class="reveal" style={`transition-delay: ${Math.min(i, 6) * 0.08}s`}>
+              <span class="timeline-dot"></span>
               <span class="timeline-period">{entry.period}</span>
               <div>
                 <h3>{entry.title}</h3>
@@ -155,25 +160,41 @@ const timeline = [
   }
 
   .timeline {
+    position: relative;
     list-style: none;
     padding: 0;
     margin: 1.5rem 0 0;
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
+    gap: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 152px;
+    width: 2px;
+    background: linear-gradient(var(--color-border), var(--color-border)) padding-box;
   }
 
   .timeline li {
+    position: relative;
     display: grid;
     grid-template-columns: 140px 1fr;
     gap: 1rem;
-    padding-bottom: 1.75rem;
-    border-bottom: 1px solid var(--color-border);
   }
 
-  .timeline li:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .timeline-dot {
+    position: absolute;
+    left: 148px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gradient-brand);
+    box-shadow: 0 0 0 4px var(--color-bg);
   }
 
   .timeline-period {
@@ -192,9 +213,18 @@ const timeline = [
   }
 
   @media (max-width: 560px) {
+    .timeline::before {
+      left: 4px;
+    }
+
     .timeline li {
       grid-template-columns: 1fr;
       gap: 0.35rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-dot {
+      left: 0;
     }
   }
 </style>

@@ -11,12 +11,14 @@ import ContactForm from '../components/ContactForm.astro';
 >
   <section class="section">
     <div class="container">
-      <h1>Contact</h1>
-      <p class="intro">
+      <h1 class="reveal">Contact</h1>
+      <p class="intro reveal" style="transition-delay: 0.08s">
         Une question, un projet en tête ? Écrivez-moi via le formulaire
         ci-dessous.
       </p>
-      <ContactForm />
+      <div class="reveal" style="transition-delay: 0.16s">
+        <ContactForm />
+      </div>
     </div>
   </section>
 </Layout>

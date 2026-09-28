@@ -63,14 +63,34 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-link {
+    position: relative;
     text-decoration: none;
     color: var(--color-text-muted);
     font-weight: 500;
     transition: color 0.15s ease;
   }
 
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
   .nav-link:hover,
   .nav-link.active {
     color: var(--color-text);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
   }
 </style>

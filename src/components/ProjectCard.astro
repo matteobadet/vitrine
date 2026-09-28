@@ -11,7 +11,7 @@ const { name, description, url, status, tags } = Astro.props;
 const statusLabel = status === 'live' ? 'En ligne' : 'En développement';
 ---
 
-<a href={url} class="project-card" target="_blank" rel="noopener noreferrer">
+<a href={url} class="project-card reveal" target="_blank" rel="noopener noreferrer">
   <div class="card-top">
     <h3>{name}</h3>
     <span class:list={['badge', { 'badge--dev': status === 'dev' }]}>{statusLabel}</span>
@@ -23,8 +23,19 @@ const statusLabel = status === 'live' ? 'En ligne' : 'En développement';
   <span class="card-cta">Voir le projet →</span>
 </a>
 
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.project-card').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`);
+    });
+  });
+</script>
+
 <style>
   .project-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -36,6 +47,25 @@ const statusLabel = status === 'live' ? 'En ligne' : 'En développement';
     color: var(--color-text);
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     height: 100%;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(124, 92, 255, 0.16),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
   }
 
   .project-card:hover {
