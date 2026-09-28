@@ -5,112 +5,98 @@ interface Props {
   url: string;
   status: 'live' | 'dev';
   tags: string[];
+  index: number;
 }
 
-const { name, description, url, status, tags } = Astro.props;
+const { name, description, url, status, tags, index } = Astro.props;
 const statusLabel = status === 'live' ? 'En ligne' : 'En développement';
+const indexLabel = String(index).padStart(2, '0');
 ---
 
-<a href={url} class="project-card reveal" target="_blank" rel="noopener noreferrer">
-  <div class="card-top">
-    <h3>{name}</h3>
-    <span class:list={['badge', { 'badge--dev': status === 'dev' }]}>{statusLabel}</span>
+<a href={url} class="project-row reveal" target="_blank" rel="noopener noreferrer">
+  <span class="project-index mono">{indexLabel}</span>
+  <div class="project-main">
+    <div class="project-head">
+      <h3>{name}</h3>
+      <span class:list={['status', { 'status--dev': status === 'dev' }]}>{statusLabel}</span>
+    </div>
+    <p>{description}</p>
+    <div class="project-tags mono">{tags.join(' · ')}</div>
   </div>
-  <p>{description}</p>
-  <div class="tags">
-    {tags.map((tag) => <span class="tag">{tag}</span>)}
-  </div>
-  <span class="card-cta">Voir le projet →</span>
+  <span class="project-arrow" aria-hidden="true">→</span>
 </a>
 
-<script>
-  document.querySelectorAll<HTMLAnchorElement>('.project-card').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
-      card.style.setProperty('--my', `${event.clientY - rect.top}px`);
-    });
-  });
-</script>
-
 <style>
-  .project-card {
+  .project-row {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.75rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: start;
+    gap: 1.5rem;
+    padding: 1.75rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
     text-decoration: none;
     color: var(--color-text);
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    height: 100%;
-    overflow: hidden;
+    transition: background-color 0.2s ease;
   }
 
-  .project-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      260px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(124, 92, 255, 0.16),
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .project-card:hover::before {
-    opacity: 1;
-  }
-
-  .project-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent-2);
-    box-shadow: var(--shadow-glow);
-  }
-
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 0.75rem;
-  }
-
-  .card-top h3 {
-    font-size: 1.25rem;
-    margin: 0;
-    min-width: 0;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: auto;
-  }
-
-  .tag {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+  .project-row:hover {
     background: var(--color-bg-alt);
-    border: 1px solid var(--color-border);
-    padding: 0.2em 0.6em;
-    border-radius: 999px;
   }
 
-  .card-cta {
-    margin-top: 0.5rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .project-row:hover .project-arrow {
+    transform: translateX(4px);
+    color: var(--color-accent-2);
+  }
+
+  .project-row:hover h3 {
+    color: var(--color-accent-2);
+  }
+
+  .project-index {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding-top: 0.2rem;
+  }
+
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.9rem;
+  }
+
+  .project-head h3 {
+    font-size: 1.35rem;
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  .project-main p {
+    margin: 0.6rem 0 0;
+    max-width: 60ch;
+  }
+
+  .project-tags {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .project-arrow {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding-top: 0.2rem;
+  }
+
+  @media (max-width: 640px) {
+    .project-row {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .project-arrow {
+      display: none;
+    }
   }
 </style>
