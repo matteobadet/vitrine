@@ -23,8 +23,8 @@ const year = new Date().getFullYear();
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-border) 20%, var(--color-border) 80%, transparent);
+    height: 2px;
+    background: var(--color-ink);
   }
 
   .footer-inner {
@@ -35,15 +35,16 @@ const year = new Date().getFullYear();
     align-items: center;
     padding-block: 2rem;
     font-size: 0.9rem;
-    color: var(--color-text-muted);
+    color: var(--color-muted);
   }
 
   .footer-links a {
     text-decoration: none;
-    color: var(--color-text-muted);
+    color: var(--color-muted);
+    font-weight: 600;
   }
 
   .footer-links a:hover {
-    color: var(--color-text);
+    color: var(--color-primary);
   }
 </style>

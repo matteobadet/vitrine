@@ -5,6 +5,8 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import portrait from '../assets/matteo.jpg';
 
+const accents = ['coral', 'emerald', 'amber', 'primary'];
+
 // Contenu codé en dur — à mettre à jour ici puis redéployer.
 const skills = [
   'C# / .NET (API)',
@@ -84,7 +86,14 @@ const timeline = [
       <p class="eyebrow reveal">Stack</p>
       <h2 class="reveal">Compétences</h2>
       <ul class="skills-list">
-        {skills.map((skill, i) => <li class="reveal" style={`transition-delay: ${Math.min(i, 6) * 0.06}s`}>{skill}</li>)}
+        {skills.map((skill, i) => (
+          <li
+            class="reveal"
+            style={`transition-delay: ${Math.min(i, 6) * 0.06}s; --chip-accent: var(--color-${accents[i % accents.length]})`}
+          >
+            {skill}
+          </li>
+        ))}
       </ul>
     </div>
   </section>
@@ -96,7 +105,10 @@ const timeline = [
       <ol class="timeline">
         {
           timeline.map((entry, i) => (
-            <li class="reveal" style={`transition-delay: ${Math.min(i, 6) * 0.08}s`}>
+            <li
+              class="reveal"
+              style={`transition-delay: ${Math.min(i, 6) * 0.08}s; --dot-accent: var(--color-${accents[i % accents.length]})`}
+            >
               <span class="timeline-dot"></span>
               <span class="timeline-period">{entry.period}</span>
               <div>
@@ -124,8 +136,7 @@ const timeline = [
     height: 160px;
     border-radius: var(--radius-lg);
     object-fit: cover;
-    border: 2px solid var(--color-border);
-    box-shadow: var(--shadow-glow);
+    border: 3px solid var(--color-ink);
   }
 
   .bio {
@@ -153,10 +164,11 @@ const timeline = [
   .skills-list li {
     padding: 0.5em 1em;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
+    border: 2px solid var(--chip-accent, var(--color-border));
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--color-ink);
+    background: var(--color-surface);
   }
 
   .timeline {
@@ -190,17 +202,17 @@ const timeline = [
     position: absolute;
     left: 148px;
     top: 5px;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: var(--color-accent-2);
+    background: var(--dot-accent, var(--color-primary));
     box-shadow: 0 0 0 4px var(--color-bg);
   }
 
   .timeline-period {
-    font-family: var(--font-mono);
+    font-weight: 700;
     font-size: 0.82rem;
-    color: var(--color-text-muted);
+    color: var(--color-muted);
   }
 
   .timeline h3 {

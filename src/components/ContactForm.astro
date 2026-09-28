@@ -58,16 +58,16 @@
     font-size: 1rem;
     padding: 0.75em 1em;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-alt);
-    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-ink);
   }
 
   input:focus,
   textarea:focus {
     outline: none;
-    border-color: var(--color-accent-2);
-    box-shadow: 0 0 0 3px rgba(111, 99, 240, 0.25);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(70, 56, 255, 0.15);
   }
 
   button {
@@ -86,11 +86,11 @@
   }
 
   #form-status[data-state='success'] {
-    color: var(--color-accent-3);
+    color: var(--color-emerald);
   }
 
   #form-status[data-state='error'] {
-    color: var(--color-accent-1);
+    color: var(--color-coral);
   }
 </style>
 

@@ -10,7 +10,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo mono">mbadet.fr</a>
+    <a href="/" class="logo">mbadet.fr</a>
     <nav>
       <ul>
         {
@@ -36,8 +36,8 @@ const currentPath = Astro.url.pathname;
     top: 0;
     z-index: 50;
     backdrop-filter: blur(10px);
-    background: rgba(10, 10, 12, 0.8);
-    border-bottom: 1px solid var(--color-border);
+    background: rgba(250, 246, 238, 0.85);
+    border-bottom: 2px solid var(--color-ink);
   }
 
   .header-inner {
@@ -48,9 +48,10 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo {
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--color-text);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-ink);
     text-decoration: none;
   }
 
@@ -65,8 +66,8 @@ const currentPath = Astro.url.pathname;
   .nav-link {
     position: relative;
     text-decoration: none;
-    color: var(--color-text-muted);
-    font-weight: 500;
+    color: var(--color-muted);
+    font-weight: 600;
     transition: color 0.15s ease;
   }
 
@@ -76,8 +77,9 @@ const currentPath = Astro.url.pathname;
     left: 0;
     right: 0;
     bottom: -4px;
-    height: 1px;
-    background: var(--color-accent-2);
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-primary);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.2s ease;
@@ -85,7 +87,7 @@ const currentPath = Astro.url.pathname;
 
   .nav-link:hover,
   .nav-link.active {
-    color: var(--color-text);
+    color: var(--color-ink);
   }
 
   .nav-link:hover::after,
