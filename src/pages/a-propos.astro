@@ -3,7 +3,7 @@ export const prerender = true;
 
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-import ClimbingScene from '../components/ClimbingScene.astro';
+import NatureScene from '../components/NatureScene.astro';
 import portrait from '../assets/matteo.jpg';
 
 const accents = ['terracotta', 'sky', 'amber', 'primary'];
@@ -58,7 +58,7 @@ const timeline = [
   title="À propos"
   description="Parcours, compétences et bio de Matteo Badet."
 >
-  <ClimbingScene>
+  <NatureScene>
     <Image
       src={portrait}
       alt="Portrait de Matteo Badet"
@@ -77,7 +77,7 @@ const timeline = [
       aidé à apprivoiser mon vertige — et quelques sports de raquette que
       je pratique depuis tout petit.
     </p>
-  </ClimbingScene>
+  </NatureScene>
 
   <section class="section">
     <div class="container">

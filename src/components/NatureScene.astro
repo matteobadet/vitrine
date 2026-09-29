@@ -1,15 +1,49 @@
 ---
-import LowPolyFigure from './LowPolyFigure.astro';
+interface Props {
+  sparkTrigger?: string;
+}
+const { sparkTrigger = '' } = Astro.props;
+
+// Foret generee : chaque sapin est 2 etages (silhouette faconnee) + tronc,
+// avec un cote clair / cote ombre pour le rendu low-poly a facettes.
+type Tree = { x: number; h: number; w: number; tone: number };
+
+function seededTrees(count: number, xStart: number, xEnd: number, hMin: number, hMax: number, seed: number): Tree[] {
+  const trees: Tree[] = [];
+  let s = seed;
+  const rand = () => {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+  for (let i = 0; i < count; i++) {
+    const t = i / (count - 1);
+    const x = xStart + t * (xEnd - xStart) + (rand() - 0.5) * ((xEnd - xStart) / count) * 0.8;
+    const h = hMin + rand() * (hMax - hMin);
+    const w = h * (0.34 + rand() * 0.1);
+    const tone = Math.floor(rand() * 4);
+    trees.push({ x, h, w, tone });
+  }
+  return trees;
+}
+
+const backTrees = seededTrees(26, -20, 1460, 40, 68, 11);
+const frontTreesL = seededTrees(7, -60, 340, 90, 150, 42);
+const frontTreesR = seededTrees(7, 1150, 1500, 90, 150, 73);
+
+const dayTones = ['#5c8a6b', '#4d7a5c', '#3f6a4d', '#6a9878'];
+const dayShades = ['#3f6a4d', '#356048', '#2b5039', '#4a7a5a'];
+const nightTones = ['#1c3024', '#16281e', '#122016', '#20362a'];
+const nightShades = ['#0f2018', '#0c1a13', '#09140f', '#122419'];
 ---
 
-<div class="hiking-scene" id="hiking-scene" data-mode="day">
+<div class="nature-scene" id="nature-scene" data-mode="day">
   <button type="button" id="mode-toggle" class="mode-toggle" aria-label="Basculer jour / nuit">
     <span class="mode-icon day-only" aria-hidden="true">☀️</span>
     <span class="mode-icon night-only" aria-hidden="true">🌙</span>
   </button>
 
   <svg
-    class="hiking-svg"
+    class="nature-svg"
     viewBox="0 0 1440 700"
     preserveAspectRatio="xMidYMax slice"
     aria-hidden="true"
@@ -17,11 +51,12 @@ import LowPolyFigure from './LowPolyFigure.astro';
   >
     <defs>
       <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#bfe3f5" />
+        <stop offset="0%" stop-color="#5f96d9" />
+        <stop offset="45%" stop-color="#bfe3f5" />
         <stop offset="100%" stop-color="#eef6ee" />
       </linearGradient>
       <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0d1526" />
+        <stop offset="0%" stop-color="#060a16" />
         <stop offset="100%" stop-color="#2c3a52" />
       </linearGradient>
       <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
@@ -30,7 +65,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
       </linearGradient>
       <linearGradient id="groundGradNight" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#33473a" />
-        <stop offset="100%" stop-color="#22301f" />
+        <stop offset="100%" stop-color="#1a251c" />
       </linearGradient>
       <linearGradient id="tentGrad" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#e39264" />
@@ -108,19 +143,24 @@ import LowPolyFigure from './LowPolyFigure.astro';
       <circle cx="1220" cy="110" r="42" fill="#f4f1e8" />
       <circle cx="1206" cy="98" r="34" fill="#2c3a52" opacity="0.5" />
       <g fill="#f4f1e8">
-        <circle cx="180" cy="90" r="2.2" />
-        <circle cx="260" cy="150" r="1.6" />
-        <circle cx="340" cy="80" r="2" />
-        <circle cx="430" cy="130" r="1.4" />
-        <circle cx="520" cy="70" r="2.2" />
-        <circle cx="640" cy="110" r="1.6" />
-        <circle cx="760" cy="60" r="2" />
-        <circle cx="860" cy="140" r="1.4" />
-        <circle cx="960" cy="90" r="2.2" />
-        <circle cx="1060" cy="50" r="1.6" />
-        <circle cx="90" cy="180" r="1.4" />
-        <circle cx="1360" cy="90" r="2" />
+        <circle cx="180" cy="90" r="2.2" /><circle cx="260" cy="150" r="1.6" />
+        <circle cx="340" cy="80" r="2" /><circle cx="430" cy="130" r="1.4" />
+        <circle cx="520" cy="70" r="2.2" /><circle cx="640" cy="110" r="1.6" />
+        <circle cx="760" cy="60" r="2" /><circle cx="860" cy="140" r="1.4" />
+        <circle cx="960" cy="90" r="2.2" /><circle cx="1060" cy="50" r="1.6" />
+        <circle cx="90" cy="180" r="1.4" /><circle cx="1360" cy="90" r="2" />
+        <circle cx="500" cy="200" r="1.3" /><circle cx="820" cy="200" r="1.5" />
       </g>
+    </g>
+
+    <!-- clouds -->
+    <g class="cloud day-only" fill="#ffffff" opacity="0.85">
+      <ellipse cx="180" cy="130" rx="80" ry="28" />
+      <ellipse cx="250" cy="112" rx="58" ry="24" />
+    </g>
+    <g class="cloud cloud-2 day-only" fill="#ffffff" opacity="0.7">
+      <ellipse cx="560" cy="95" rx="60" ry="22" />
+      <ellipse cx="620" cy="110" rx="45" ry="16" />
     </g>
 
     <!-- distant hazy ridge -->
@@ -167,30 +207,54 @@ import LowPolyFigure from './LowPolyFigure.astro';
       <polygon points="1200,520 1310,420 1440,510 1440,520" fill="url(#nCoolShadow)" />
     </g>
 
-    <!-- tree ridge line -->
-    <g id="tree-ridge" fill="var(--color-primary)">
-      <path d="M40 540 L64 480 L88 540 Z" /><path d="M80 540 L108 460 L136 540 Z" opacity="0.85" />
-      <path d="M130 540 L152 490 L174 540 Z" /><path d="M170 540 L200 465 L230 540 Z" opacity="0.85" />
-      <path d="M960 540 L985 470 L1010 540 Z" opacity="0.85" /><path d="M1000 540 L1028 455 L1056 540 Z" />
-      <path d="M1050 540 L1074 485 L1098 540 Z" opacity="0.85" /><path d="M1240 540 L1266 465 L1292 540 Z" />
-      <path d="M1280 540 L1302 495 L1324 540 Z" opacity="0.85" /><path d="M1320 540 L1348 470 L1376 540 Z" />
-      <path d="M1360 540 L1388 500 L1416 540 Z" opacity="0.85" />
+    <!-- foret arriere : ligne d'horizon dense de petits sapins -->
+    <g class="day-only">
+      {backTrees.map((t) => (
+        <g transform={`translate(${t.x},540)`}>
+          <polygon points={`0,${-t.h} ${-t.w},0 0,${-t.h * 0.35} ${t.w},0`} fill={dayTones[t.tone]} />
+          <polygon points={`0,${-t.h} 0,${-t.h * 0.35} ${t.w},0`} fill={dayShades[t.tone]} />
+        </g>
+      ))}
+    </g>
+    <g class="night-only">
+      {backTrees.map((t) => (
+        <g transform={`translate(${t.x},540)`}>
+          <polygon points={`0,${-t.h} ${-t.w},0 0,${-t.h * 0.35} ${t.w},0`} fill={nightTones[t.tone]} />
+          <polygon points={`0,${-t.h} 0,${-t.h * 0.35} ${t.w},0`} fill={nightShades[t.tone]} />
+        </g>
+      ))}
     </g>
 
     <!-- ground -->
     <rect class="day-only" x="0" y="530" width="1440" height="170" fill="url(#groundGrad)" />
     <rect class="night-only" x="0" y="530" width="1440" height="170" fill="url(#groundGradNight)" />
 
-    <!-- foreground framing trees -->
-    <g fill="var(--color-primary)">
-      <path d="M-40 700 L30 520 L100 700 Z" opacity="0.95" />
-      <path d="M20 700 L110 560 L200 700 Z" opacity="0.8" />
-      <path d="M1340 700 L1410 540 L1480 700 Z" opacity="0.95" />
-      <path d="M1260 700 L1350 570 L1440 700 Z" opacity="0.8" />
+    <!-- foret avant : sapins detailles a 2 etages, cadrant la scene -->
+    <g class="day-only">
+      {[...frontTreesL, ...frontTreesR].map((t) => (
+        <g transform={`translate(${t.x},700)`}>
+          <rect x={-t.w * 0.08} y={-t.h * 0.12} width={t.w * 0.16} height={t.h * 0.12} fill="#5a4331" />
+          <polygon points={`0,${-t.h} ${-t.w * 0.55},${-t.h * 0.42} 0,${-t.h * 0.58} ${t.w * 0.55},${-t.h * 0.42}`} fill={dayTones[t.tone]} />
+          <polygon points={`0,${-t.h} 0,${-t.h * 0.58} ${t.w * 0.55},${-t.h * 0.42}`} fill={dayShades[t.tone]} />
+          <polygon points={`0,${-t.h * 0.62} ${-t.w},${-t.h * 0.05} 0,${-t.h * 0.3} ${t.w},${-t.h * 0.05}`} fill={dayTones[t.tone]} />
+          <polygon points={`0,${-t.h * 0.62} 0,${-t.h * 0.3} ${t.w},${-t.h * 0.05}`} fill={dayShades[t.tone]} />
+        </g>
+      ))}
+    </g>
+    <g class="night-only">
+      {[...frontTreesL, ...frontTreesR].map((t) => (
+        <g transform={`translate(${t.x},700)`}>
+          <rect x={-t.w * 0.08} y={-t.h * 0.12} width={t.w * 0.16} height={t.h * 0.12} fill="#1c140f" />
+          <polygon points={`0,${-t.h} ${-t.w * 0.55},${-t.h * 0.42} 0,${-t.h * 0.58} ${t.w * 0.55},${-t.h * 0.42}`} fill={nightTones[t.tone]} />
+          <polygon points={`0,${-t.h} 0,${-t.h * 0.58} ${t.w * 0.55},${-t.h * 0.42}`} fill={nightShades[t.tone]} />
+          <polygon points={`0,${-t.h * 0.62} ${-t.w},${-t.h * 0.05} 0,${-t.h * 0.3} ${t.w},${-t.h * 0.05}`} fill={nightTones[t.tone]} />
+          <polygon points={`0,${-t.h * 0.62} 0,${-t.h * 0.3} ${t.w},${-t.h * 0.05}`} fill={nightShades[t.tone]} />
+        </g>
+      ))}
     </g>
 
-    <!-- tent -->
-    <g id="tent" transform="translate(950,0)">
+    <!-- tente -->
+    <g id="tent" transform="translate(980,0)">
       <path d="M-20 580 L80 460 L180 580 Z" fill="url(#tentGrad)" />
       <path d="M40 580 L80 460 L120 580 Z" fill="#00000022" />
       <path d="M80 460 L80 580" stroke="#00000030" stroke-width="2" />
@@ -200,8 +264,8 @@ import LowPolyFigure from './LowPolyFigure.astro';
       <path d="M40 580 Q80 520 120 580 Z" fill="#3a2a22" opacity="0.55" />
     </g>
 
-    <!-- campfire -->
-    <g id="campfire" transform="translate(620,600)">
+    <!-- feu de camp -->
+    <g id="campfire" transform="translate(560,610)">
       <ellipse class="day-only" cx="0" cy="6" rx="120" ry="34" fill="url(#fireGlowDay)" />
       <ellipse class="night-only" cx="0" cy="6" rx="160" ry="46" fill="url(#fireGlowNight)" />
 
@@ -230,30 +294,15 @@ import LowPolyFigure from './LowPolyFigure.astro';
         <circle class="ember ember-3" cx="-2" cy="-40" r="1.8" />
         <circle class="ember ember-4" cx="14" cy="-34" r="1.6" />
       </g>
-    </g>
-  </svg>
 
-  <svg
-    class="hiker-svg"
-    viewBox="0 0 1440 700"
-    preserveAspectRatio="xMidYMax slice"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <LowPolyFigure
-      id="hiker"
-      x={790}
-      y={605}
-      scale={2.05}
-      flip={true}
-      top="#d97a4d"
-      topShade="#b85f37"
-      bottom="#3a3660"
-      bottomShade="#252140"
-      motionClass="fig-walk"
-      forearmFrontAngle={15}
-      forearmBackAngle={15}
-    />
+      <g id="sparks" fill="#ffcf5c">
+        <circle class="spark spark-1" cx="-4" cy="-20" r="1.6" />
+        <circle class="spark spark-2" cx="10" cy="-18" r="1.4" />
+        <circle class="spark spark-3" cx="-14" cy="-14" r="1.4" />
+        <circle class="spark spark-4" cx="16" cy="-22" r="1.2" />
+        <circle class="spark spark-5" cx="0" cy="-26" r="1.5" />
+      </g>
+    </g>
   </svg>
 
   <div class="hero-panel reveal">
@@ -262,7 +311,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
 </div>
 
 <style>
-  .hiking-scene {
+  .nature-scene {
     position: relative;
     min-height: 100vh;
     display: flex;
@@ -270,98 +319,28 @@ import LowPolyFigure from './LowPolyFigure.astro';
     overflow: hidden;
   }
 
-  .hiking-svg,
-  .hiker-svg {
+  .nature-svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .hiking-svg {
     z-index: -1;
   }
 
-  .hiker-svg {
-    z-index: 0;
-    filter: drop-shadow(0 8px 6px rgba(20, 15, 40, 0.3));
-  }
-
-  /* --- marche : jambes et bras riggees, rotation autour des articulations
-     reelles (hanche/genou/epaule) --- */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.fig-walk .fig-thigh-front-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-thigh-f 0.9s ease-in-out infinite;
-    }
-    :global(.fig-walk .fig-shin-front-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-shin-f 0.9s ease-in-out infinite;
-    }
-    :global(.fig-walk .fig-thigh-back-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-thigh-b 0.9s ease-in-out infinite;
-    }
-    :global(.fig-walk .fig-shin-back-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-shin-b 0.9s ease-in-out infinite;
-    }
-    :global(.fig-walk .fig-arm-front-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-arm-f 0.9s ease-in-out infinite;
-    }
-    :global(.fig-walk .fig-arm-back-pivot) {
-      transform-origin: 0px 0px;
-      animation: walk-arm-b 0.9s ease-in-out infinite;
-    }
-  }
-
-  @keyframes walk-thigh-f {
-    0% { transform: rotate(-30deg); }
-    25% { transform: rotate(5deg); }
-    50% { transform: rotate(30deg); }
-    75% { transform: rotate(0deg); }
-    100% { transform: rotate(-30deg); }
-  }
-  @keyframes walk-shin-f {
-    0% { transform: rotate(10deg); }
-    25% { transform: rotate(5deg); }
-    50% { transform: rotate(10deg); }
-    75% { transform: rotate(45deg); }
-    100% { transform: rotate(10deg); }
-  }
-  @keyframes walk-thigh-b {
-    0% { transform: rotate(30deg); }
-    25% { transform: rotate(0deg); }
-    50% { transform: rotate(-30deg); }
-    75% { transform: rotate(5deg); }
-    100% { transform: rotate(30deg); }
-  }
-  @keyframes walk-shin-b {
-    0% { transform: rotate(10deg); }
-    25% { transform: rotate(45deg); }
-    50% { transform: rotate(10deg); }
-    75% { transform: rotate(5deg); }
-    100% { transform: rotate(10deg); }
-  }
-  @keyframes walk-arm-f {
-    0% { transform: rotate(15deg); }
-    25% { transform: rotate(0deg); }
-    50% { transform: rotate(-15deg); }
-    75% { transform: rotate(2.5deg); }
-    100% { transform: rotate(15deg); }
-  }
-  @keyframes walk-arm-b {
-    0% { transform: rotate(-15deg); }
-    25% { transform: rotate(2.5deg); }
-    50% { transform: rotate(15deg); }
-    75% { transform: rotate(0deg); }
-    100% { transform: rotate(-15deg); }
-  }
-
   .night-only { display: none; }
-  .hiking-scene[data-mode='night'] .night-only { display: block; }
-  .hiking-scene[data-mode='night'] .day-only { display: none; }
+  .nature-scene[data-mode='night'] .night-only { display: block; }
+  .nature-scene[data-mode='night'] .day-only { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud { animation: drift 55s linear infinite; }
+    .cloud-2 { animation-duration: 70s; animation-delay: -25s; }
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-70px); }
+    100% { transform: translateX(0); }
+  }
 
   .mode-toggle {
     position: absolute;
@@ -390,11 +369,11 @@ import LowPolyFigure from './LowPolyFigure.astro';
     display: none;
   }
 
-  .hiking-scene[data-mode='night'] .mode-icon.day-only {
+  .nature-scene[data-mode='night'] .mode-icon.day-only {
     display: none;
   }
 
-  .hiking-scene[data-mode='night'] .mode-icon.night-only {
+  .nature-scene[data-mode='night'] .mode-icon.night-only {
     display: inline;
   }
 
@@ -408,7 +387,6 @@ import LowPolyFigure from './LowPolyFigure.astro';
     max-width: 620px;
     margin-inline: 1rem;
   }
-
 
   #flames {
     transform-origin: 0px 4px;
@@ -446,23 +424,44 @@ import LowPolyFigure from './LowPolyFigure.astro';
     100% { transform: translate(6px, -60px); opacity: 0; }
   }
 
+  #sparks .spark {
+    opacity: 0;
+  }
+
+  .nature-scene.is-sparking #sparks .spark {
+    animation: spark-burst 0.9s ease-out forwards;
+  }
+
+  .spark-1 { animation-delay: 0s !important; }
+  .spark-2 { animation-delay: 0.05s !important; }
+  .spark-3 { animation-delay: 0.1s !important; }
+  .spark-4 { animation-delay: 0.02s !important; }
+  .spark-5 { animation-delay: 0.08s !important; }
+
+  @keyframes spark-burst {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx, 10px), -70px) scale(0.5); }
+  }
+
+  .spark-1 { --dx: -18px; }
+  .spark-2 { --dx: 22px; }
+  .spark-3 { --dx: -30px; }
+  .spark-4 { --dx: 34px; }
+  .spark-5 { --dx: 4px; }
+
   @media (max-width: 720px) {
     .hero-panel {
       padding: 2rem 1.5rem;
     }
-
-    .hiker-svg {
-      opacity: 0.45;
-    }
   }
 </style>
 
-<script>
-  const scene = document.getElementById('hiking-scene');
+<script define:vars={{ sparkTrigger }}>
+  const scene = document.getElementById('nature-scene');
   const toggle = document.getElementById('mode-toggle');
 
   if (scene && toggle) {
-    let stored: string | null = null;
+    let stored = null;
     try {
       stored = localStorage.getItem('mbadet-hero-mode');
     } catch {
@@ -478,6 +477,15 @@ import LowPolyFigure from './LowPolyFigure.astro';
       } catch {
         /* ignore */
       }
+    });
+  }
+
+  if (scene && sparkTrigger) {
+    window.addEventListener(sparkTrigger, () => {
+      scene.classList.remove('is-sparking');
+      void scene.getBoundingClientRect();
+      scene.classList.add('is-sparking');
+      window.setTimeout(() => scene.classList.remove('is-sparking'), 1000);
     });
   }
 </script>

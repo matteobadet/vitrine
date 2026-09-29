@@ -3,7 +3,7 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import HikingScene from '../components/HikingScene.astro';
+import NatureScene from '../components/NatureScene.astro';
 
 const accents = ['terracotta', 'sky', 'amber', 'primary'] as const;
 
@@ -64,7 +64,7 @@ const projects = [
   title="Accueil"
   description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster, ApexGrid, Arya Hub."
 >
-  <HikingScene>
+  <NatureScene>
     <h1>
       Salut, je suis <span class="highlight">Matteo Badet</span>
       <svg class="wave-icon" viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">
@@ -90,7 +90,7 @@ const projects = [
       <a href="/contact" class="btn btn-primary">Me contacter</a>
       <a href="/a-propos" class="btn btn-secondary">À propos de moi</a>
     </div>
-  </HikingScene>
+  </NatureScene>
 
   <section class="section">
     <div class="container">
