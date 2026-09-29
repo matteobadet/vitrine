@@ -3,62 +3,26 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
-import BadmintonScene from '../components/BadmintonScene.astro';
+import CyclingScene from '../components/CyclingScene.astro';
 ---
 
 <Layout
   title="Contact"
   description="Contactez Matteo Badet pour un projet, une question ou une proposition."
 >
-  <section class="contact-hero">
-    <div class="container contact-grid">
-      <div class="contact-copy reveal">
-        <h1>Contact</h1>
-        <p class="intro">
-          Une question, un projet en tête ? Écrivez-moi via le formulaire
-          ci-dessous.
-        </p>
-        <ContactForm />
-      </div>
-      <BadmintonScene />
-    </div>
-  </section>
+  <CyclingScene>
+    <h1>Contact</h1>
+    <p class="intro">
+      Une question, un projet en tête ? Écrivez-moi via le formulaire
+      ci-dessous.
+    </p>
+    <ContactForm />
+  </CyclingScene>
 </Layout>
 
 <style>
-  .contact-hero {
-    padding-block: 2.5rem 4rem;
-    min-height: calc(100vh - 70px);
-    display: flex;
-    align-items: center;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: minmax(320px, 460px) 1fr;
-    gap: 3rem;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .contact-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .intro {
     max-width: 50ch;
-    margin-bottom: 1.75rem;
-  }
-
-  @media (max-width: 900px) {
-    .contact-hero {
-      min-height: auto;
-    }
-
-    .contact-grid {
-      grid-template-columns: 1fr;
-    }
+    margin-bottom: 1.5rem;
   }
 </style>
