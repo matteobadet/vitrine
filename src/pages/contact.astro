@@ -3,21 +3,21 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
-import NatureScene from '../components/NatureScene.astro';
+import LowPolyScene from '../components/LowPolyScene.astro';
 ---
 
 <Layout
   title="Contact"
   description="Contactez Matteo Badet pour un projet, une question ou une proposition."
 >
-  <NatureScene sparkTrigger="contact:serve">
+  <LowPolyScene variant="bivouac" sparkTrigger="contact:serve">
     <h1>Contact</h1>
     <p class="intro">
       Une question, un projet en tête ? Écrivez-moi via le formulaire
       ci-dessous.
     </p>
     <ContactForm />
-  </NatureScene>
+  </LowPolyScene>
 </Layout>
 
 <style>
