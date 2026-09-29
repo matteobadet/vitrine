@@ -77,13 +77,65 @@
       </g>
     </g>
 
-    <!-- distant mountains -->
-    <path class="day-only" d="M0 460 L140 360 L260 430 L400 320 L560 440 L720 350 L900 450 L1080 370 L1260 440 L1440 400 L1440 560 L0 560 Z" fill="#9fc4d8" opacity="0.5" />
-    <path class="night-only" d="M0 460 L140 360 L260 430 L400 320 L560 440 L720 350 L900 450 L1080 370 L1260 440 L1440 400 L1440 560 L0 560 Z" fill="#1c2840" opacity="0.7" />
+    <!-- distant mountains: low-poly facets clipped to the ridge silhouette -->
+    <clipPath id="mtnFarClip">
+      <path d="M0 460 L140 360 L260 430 L400 320 L560 440 L720 350 L900 450 L1080 370 L1260 440 L1440 400 L1440 560 L0 560 Z" />
+    </clipPath>
+    <g clip-path="url(#mtnFarClip)">
+      <rect x="0" y="0" width="1440" height="560" class="day-only" fill="#a7bce8" opacity="0.55" />
+      <rect x="0" y="0" width="1440" height="560" class="night-only" fill="#1c2840" opacity="0.75" />
+      <g class="day-only" opacity="0.9">
+        <polygon points="0,460 140,360 140,560 0,560" fill="#c3d3f2" />
+        <polygon points="140,360 260,430 140,560" fill="#8fa4dc" />
+        <polygon points="260,430 400,320 400,560 260,560" fill="#b6c8ef" />
+        <polygon points="400,320 560,440 400,560" fill="#8296d4" />
+        <polygon points="560,440 720,350 720,560 560,560" fill="#c3d3f2" />
+        <polygon points="720,350 900,450 720,560" fill="#8fa4dc" />
+        <polygon points="900,450 1080,370 1080,560 900,560" fill="#b6c8ef" />
+        <polygon points="1080,370 1260,440 1080,560" fill="#8296d4" />
+        <polygon points="1260,440 1440,400 1440,560 1260,560" fill="#c3d3f2" />
+      </g>
+      <g class="night-only" opacity="0.9">
+        <polygon points="0,460 140,360 140,560 0,560" fill="#33456f" />
+        <polygon points="140,360 260,430 140,560" fill="#212f52" />
+        <polygon points="260,430 400,320 400,560 260,560" fill="#2c3d63" />
+        <polygon points="400,320 560,440 400,560" fill="#1b2745" />
+        <polygon points="560,440 720,350 720,560 560,560" fill="#33456f" />
+        <polygon points="720,350 900,450 720,560" fill="#212f52" />
+        <polygon points="900,450 1080,370 1080,560 900,560" fill="#2c3d63" />
+        <polygon points="1080,370 1260,440 1080,560" fill="#1b2745" />
+        <polygon points="1260,440 1440,400 1440,560 1260,560" fill="#33456f" />
+      </g>
+    </g>
 
-    <!-- nearer mountains -->
-    <path class="day-only" d="M0 500 L180 410 L340 480 L520 390 L700 490 L880 400 L1080 500 L1260 420 L1440 480 L1440 560 L0 560 Z" fill="#5f8f74" opacity="0.6" />
-    <path class="night-only" d="M0 500 L180 410 L340 480 L520 390 L700 490 L880 400 L1080 500 L1260 420 L1440 480 L1440 560 L0 560 Z" fill="#16241c" opacity="0.75" />
+    <!-- nearer mountains: low-poly facets -->
+    <clipPath id="mtnNearClip">
+      <path d="M0 500 L180 410 L340 480 L520 390 L700 490 L880 400 L1080 500 L1260 420 L1440 480 L1440 560 L0 560 Z" />
+    </clipPath>
+    <g clip-path="url(#mtnNearClip)">
+      <rect x="0" y="0" width="1440" height="560" class="day-only" fill="#6fa384" opacity="0.65" />
+      <rect x="0" y="0" width="1440" height="560" class="night-only" fill="#16241c" opacity="0.8" />
+      <g class="day-only" opacity="0.9">
+        <polygon points="0,500 180,410 180,560 0,560" fill="#89bb9c" />
+        <polygon points="180,410 340,480 180,560" fill="#547f68" />
+        <polygon points="340,480 520,390 520,560 340,560" fill="#79ac8d" />
+        <polygon points="520,390 700,490 520,560" fill="#4d7460" />
+        <polygon points="700,490 880,400 880,560 700,560" fill="#89bb9c" />
+        <polygon points="880,400 1080,500 880,560" fill="#547f68" />
+        <polygon points="1080,500 1260,420 1260,560 1080,560" fill="#79ac8d" />
+        <polygon points="1260,420 1440,480 1260,560" fill="#4d7460" />
+      </g>
+      <g class="night-only" opacity="0.9">
+        <polygon points="0,500 180,410 180,560 0,560" fill="#233a2c" />
+        <polygon points="180,410 340,480 180,560" fill="#122016" />
+        <polygon points="340,480 520,390 520,560 340,560" fill="#1c3122" />
+        <polygon points="520,390 700,490 520,560" fill="#0f1a11" />
+        <polygon points="700,490 880,400 880,560 700,560" fill="#233a2c" />
+        <polygon points="880,400 1080,500 880,560" fill="#122016" />
+        <polygon points="1080,500 1260,420 1260,560 1080,560" fill="#1c3122" />
+        <polygon points="1260,420 1440,480 1260,560" fill="#0f1a11" />
+      </g>
+    </g>
 
     <!-- tree ridge line -->
     <g id="tree-ridge" fill="var(--color-primary)">
