@@ -1,10 +1,49 @@
 <div class="climbing-scene">
+  <svg
+    class="climbing-svg"
+    viewBox="0 0 1440 700"
+    preserveAspectRatio="xMidYMax slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="climbSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1d63c9" />
+        <stop offset="100%" stop-color="#bcd8f5" />
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1440" height="700" fill="url(#climbSky)" />
+
+    <g class="cloud" fill="#ffffff" opacity="0.55">
+      <ellipse cx="180" cy="120" rx="75" ry="26" />
+      <ellipse cx="250" cy="105" rx="55" ry="20" />
+    </g>
+    <g class="cloud cloud-2" fill="#ffffff" opacity="0.45">
+      <ellipse cx="520" cy="90" rx="60" ry="22" />
+      <ellipse cx="580" cy="105" rx="45" ry="16" />
+    </g>
+
+    <g id="cliff-back" fill="#4d78b0" opacity="0.55">
+      <polygon points="0,480 160,300 340,480" />
+      <polygon points="260,480 420,240 620,480" />
+      <polygon points="520,480 700,320 880,480" />
+    </g>
+
+    <g id="cliff-front" fill="#35507d" opacity="0.65">
+      <polygon points="-40,520 140,340 320,520" />
+      <polygon points="220,520 440,280 700,520" />
+    </g>
+  </svg>
+
   <img
     src="/illustrations/climbing.svg"
     alt=""
     aria-hidden="true"
     class="climbing-bg"
   />
+
+  <div class="chalk-puff" aria-hidden="true"></div>
 
   <div class="hero-panel reveal">
     <slot />
@@ -18,7 +57,25 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    background: #0254d6;
+  }
+
+  .climbing-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud { animation: drift 55s linear infinite; }
+    .cloud-2 { animation-duration: 70s; animation-delay: -25s; }
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-70px); }
+    100% { transform: translateX(0); }
   }
 
   .climbing-bg {
@@ -31,12 +88,54 @@
     height: 100%;
     object-fit: cover;
     object-position: 75% 40%;
+    z-index: -1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .climbing-bg {
+      animation: sway 6s ease-in-out infinite;
+      transform-origin: 50% 100%;
+    }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(-0.4deg); }
+  }
+
+  .chalk-puff {
+    position: absolute;
+    left: 68%;
+    top: 21%;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .chalk-puff {
+      animation: puff 6s ease-out infinite;
+    }
+  }
+
+  @keyframes puff {
+    0%, 60% { opacity: 0; transform: scale(0.4); }
+    68% { opacity: 0.85; transform: scale(1); }
+    85% { opacity: 0; transform: scale(1.8); }
+    100% { opacity: 0; transform: scale(0.4); }
   }
 
   @media (max-width: 720px) {
     .climbing-bg {
       left: 0;
       opacity: 0.35;
+    }
+
+    .chalk-puff {
+      display: none;
     }
   }
 

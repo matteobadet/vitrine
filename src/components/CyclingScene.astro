@@ -1,3 +1,14 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+const svgPath = path.resolve('public/illustrations/cycling.svg');
+const svgRaw = fs.readFileSync(svgPath, 'utf-8');
+const cyclistInner = svgRaw
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>\s*$/, '');
+---
+
 <div class="cycling-scene" id="cycling-scene">
   <svg
     class="cycling-svg"
@@ -11,13 +22,19 @@
         <stop offset="0%" stop-color="#bcd4f2" />
         <stop offset="100%" stop-color="#eef4f7" />
       </linearGradient>
+
+      <symbol id="cyclist-figure" viewBox="42 5 361 318">
+        <Fragment set:html={cyclistInner} />
+      </symbol>
     </defs>
 
     <rect x="0" y="0" width="1440" height="560" fill="url(#cycSky)" />
 
-    <g fill="#ffffff" opacity="0.75">
+    <g class="cloud" fill="#ffffff" opacity="0.75">
       <ellipse cx="220" cy="110" rx="70" ry="26" />
       <ellipse cx="280" cy="95" rx="55" ry="22" />
+    </g>
+    <g class="cloud cloud-2" fill="#ffffff" opacity="0.75">
       <ellipse cx="1180" cy="150" rx="80" ry="28" />
       <ellipse cx="1250" cy="130" rx="50" ry="20" />
     </g>
@@ -49,10 +66,10 @@
     <rect x="0" y="550" width="1440" height="150" fill="#4a4570" />
   </svg>
 
-  <img src="/illustrations/cycling.svg" alt="" aria-hidden="true" class="rider rider-3" />
-  <img src="/illustrations/cycling.svg" alt="" aria-hidden="true" class="rider rider-2" />
+  <svg class="rider rider-3" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
+  <svg class="rider rider-2" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
   <div class="rider-pos-1">
-    <img src="/illustrations/cycling.svg" alt="" aria-hidden="true" class="rider rider-1" />
+    <svg class="rider rider-1" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
     <div class="streaks" id="streaks"></div>
   </div>
 
@@ -78,10 +95,23 @@
     z-index: -1;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud { animation: drift 50s linear infinite; }
+    .cloud-2 { animation-duration: 65s; animation-delay: -20s; }
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-60px); }
+    100% { transform: translateX(0); }
+  }
+
   .rider {
     position: absolute;
     width: 220px;
     height: auto;
+    aspect-ratio: 361 / 318;
+    overflow: visible;
     filter: drop-shadow(0 8px 6px rgba(20, 15, 40, 0.25));
   }
 
@@ -152,15 +182,54 @@
     box-shadow: var(--shadow-soft);
   }
 
+  /* --- pedalage : rotation des roues, du pedalier et des jambes autour de
+     leurs pivots reels, mesures sur l'illustration source (cycling.svg) --- */
   @media (prefers-reduced-motion: no-preference) {
-    .rider { animation: bob 0.6s ease-in-out infinite; }
-    .rider-2 { animation-delay: -0.2s; }
-    .rider-1 { animation-delay: -0.4s; }
+    :global(#cyclist-figure #rueda_delante) {
+      transform-origin: 120.6px 229.2px;
+      animation: spin-wheel 0.55s linear infinite;
+    }
+
+    :global(#cyclist-figure #rueda_atras) {
+      transform-origin: 323.5px 248.1px;
+      animation: spin-wheel 0.55s linear infinite;
+    }
+
+    :global(#cyclist-figure #pedal) {
+      transform-origin: 216.9px 258.6px;
+      animation: spin-wheel 1s linear infinite;
+    }
+
+    :global(#cyclist-figure #pierna_delante),
+    :global(#cyclist-figure #calcetin_delante),
+    :global(#cyclist-figure #bota_delante) {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      animation: pedal-front 1s ease-in-out infinite;
+    }
+
+    :global(#cyclist-figure #pierna_atras),
+    :global(#cyclist-figure #calcetin_atras),
+    :global(#cyclist-figure #pie_atras) {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      animation: pedal-back 1s ease-in-out infinite;
+    }
   }
 
-  @keyframes bob {
-    0%, 100% { transform: scaleX(-1) translateY(0); }
-    50% { transform: scaleX(-1) translateY(-4px); }
+  @keyframes spin-wheel {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pedal-front {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+  }
+
+  @keyframes pedal-back {
+    0%, 100% { transform: rotate(6deg); }
+    50% { transform: rotate(-6deg); }
   }
 
   .cycling-scene.is-attacking .rider-pos-1 {
