@@ -48,6 +48,48 @@ import LowPolyFigure from './LowPolyFigure.astro';
         <stop offset="0%" stop-color="#eef2ff" stop-opacity="0.5" />
         <stop offset="100%" stop-color="#eef2ff" stop-opacity="0" />
       </radialGradient>
+
+      <linearGradient id="warmLight" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f6dfc4" />
+        <stop offset="100%" stop-color="#e3bd94" />
+      </linearGradient>
+      <linearGradient id="warmMid" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#d9ae86" />
+        <stop offset="100%" stop-color="#bd8c66" />
+      </linearGradient>
+      <linearGradient id="coolShadow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#7d9c8b" />
+        <stop offset="100%" stop-color="#5f7d6d" />
+      </linearGradient>
+      <linearGradient id="coolDark" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#5f7d6d" />
+        <stop offset="100%" stop-color="#496152" />
+      </linearGradient>
+      <linearGradient id="farHaze" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#b9cfe4" />
+        <stop offset="100%" stop-color="#a3c2b8" />
+      </linearGradient>
+
+      <linearGradient id="nWarmLight" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#4c5c86" />
+        <stop offset="100%" stop-color="#3b4a70" />
+      </linearGradient>
+      <linearGradient id="nWarmMid" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#3b4a70" />
+        <stop offset="100%" stop-color="#2c3a5c" />
+      </linearGradient>
+      <linearGradient id="nCoolShadow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#232d4a" />
+        <stop offset="100%" stop-color="#181f38" />
+      </linearGradient>
+      <linearGradient id="nCoolDark" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#181f38" />
+        <stop offset="100%" stop-color="#0f1428" />
+      </linearGradient>
+      <linearGradient id="nFarHaze" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2a3350" />
+        <stop offset="100%" stop-color="#232c48" />
+      </linearGradient>
     </defs>
 
     <!-- sky -->
@@ -81,64 +123,48 @@ import LowPolyFigure from './LowPolyFigure.astro';
       </g>
     </g>
 
-    <!-- distant mountains: low-poly facets clipped to the ridge silhouette -->
-    <clipPath id="mtnFarClip">
-      <path d="M0 460 L140 360 L260 430 L400 320 L560 440 L720 350 L900 450 L1080 370 L1260 440 L1440 400 L1440 560 L0 560 Z" />
-    </clipPath>
-    <g clip-path="url(#mtnFarClip)">
-      <rect x="0" y="0" width="1440" height="560" class="day-only" fill="#a7bce8" opacity="0.55" />
-      <rect x="0" y="0" width="1440" height="560" class="night-only" fill="#1c2840" opacity="0.75" />
-      <g class="day-only" opacity="0.9">
-        <polygon points="0,460 140,360 140,560 0,560" fill="#c3d3f2" />
-        <polygon points="140,360 260,430 140,560" fill="#8fa4dc" />
-        <polygon points="260,430 400,320 400,560 260,560" fill="#b6c8ef" />
-        <polygon points="400,320 560,440 400,560" fill="#8296d4" />
-        <polygon points="560,440 720,350 720,560 560,560" fill="#c3d3f2" />
-        <polygon points="720,350 900,450 720,560" fill="#8fa4dc" />
-        <polygon points="900,450 1080,370 1080,560 900,560" fill="#b6c8ef" />
-        <polygon points="1080,370 1260,440 1080,560" fill="#8296d4" />
-        <polygon points="1260,440 1440,400 1440,560 1260,560" fill="#c3d3f2" />
-      </g>
-      <g class="night-only" opacity="0.9">
-        <polygon points="0,460 140,360 140,560 0,560" fill="#33456f" />
-        <polygon points="140,360 260,430 140,560" fill="#212f52" />
-        <polygon points="260,430 400,320 400,560 260,560" fill="#2c3d63" />
-        <polygon points="400,320 560,440 400,560" fill="#1b2745" />
-        <polygon points="560,440 720,350 720,560 560,560" fill="#33456f" />
-        <polygon points="720,350 900,450 720,560" fill="#212f52" />
-        <polygon points="900,450 1080,370 1080,560 900,560" fill="#2c3d63" />
-        <polygon points="1080,370 1260,440 1080,560" fill="#1b2745" />
-        <polygon points="1260,440 1440,400 1440,560 1260,560" fill="#33456f" />
-      </g>
+    <!-- distant hazy ridge -->
+    <polygon class="day-only" points="0,340 220,230 460,330 700,210 1000,340 1440,240 1440,560 0,560" fill="url(#farHaze)" opacity="0.6" />
+    <polygon class="night-only" points="0,340 220,230 460,330 700,210 1000,340 1440,240 1440,560 0,560" fill="url(#nFarHaze)" opacity="0.7" />
+
+    <!-- mid mountains, gradient-faceted -->
+    <g class="day-only">
+      <polygon points="0,480 100,360 160,420 220,320 300,420 380,480" fill="url(#coolShadow)" />
+      <polygon points="0,480 100,360 160,420" fill="url(#warmMid)" />
+      <polygon points="160,420 220,320 300,420" fill="url(#warmLight)" />
+      <polygon points="880,480 990,340 1060,410 1140,300 1230,420 1320,480" fill="url(#coolShadow)" />
+      <polygon points="880,480 990,340 1060,410" fill="url(#warmMid)" />
+      <polygon points="1060,410 1140,300 1230,420" fill="url(#warmLight)" />
+      <polygon points="1250,480 1340,380 1440,460 1440,480" fill="url(#coolDark)" />
+    </g>
+    <g class="night-only">
+      <polygon points="0,480 100,360 160,420 220,320 300,420 380,480" fill="url(#nCoolShadow)" />
+      <polygon points="0,480 100,360 160,420" fill="url(#nWarmMid)" />
+      <polygon points="160,420 220,320 300,420" fill="url(#nWarmLight)" />
+      <polygon points="880,480 990,340 1060,410 1140,300 1230,420 1320,480" fill="url(#nCoolShadow)" />
+      <polygon points="880,480 990,340 1060,410" fill="url(#nWarmMid)" />
+      <polygon points="1060,410 1140,300 1230,420" fill="url(#nWarmLight)" />
+      <polygon points="1250,480 1340,380 1440,460 1440,480" fill="url(#nCoolDark)" />
     </g>
 
-    <!-- nearer mountains: low-poly facets -->
-    <clipPath id="mtnNearClip">
-      <path d="M0 500 L180 410 L340 480 L520 390 L700 490 L880 400 L1080 500 L1260 420 L1440 480 L1440 560 L0 560 Z" />
-    </clipPath>
-    <g clip-path="url(#mtnNearClip)">
-      <rect x="0" y="0" width="1440" height="560" class="day-only" fill="#6fa384" opacity="0.65" />
-      <rect x="0" y="0" width="1440" height="560" class="night-only" fill="#16241c" opacity="0.8" />
-      <g class="day-only" opacity="0.9">
-        <polygon points="0,500 180,410 180,560 0,560" fill="#89bb9c" />
-        <polygon points="180,410 340,480 180,560" fill="#547f68" />
-        <polygon points="340,480 520,390 520,560 340,560" fill="#79ac8d" />
-        <polygon points="520,390 700,490 520,560" fill="#4d7460" />
-        <polygon points="700,490 880,400 880,560 700,560" fill="#89bb9c" />
-        <polygon points="880,400 1080,500 880,560" fill="#547f68" />
-        <polygon points="1080,500 1260,420 1260,560 1080,560" fill="#79ac8d" />
-        <polygon points="1260,420 1440,480 1260,560" fill="#4d7460" />
-      </g>
-      <g class="night-only" opacity="0.9">
-        <polygon points="0,500 180,410 180,560 0,560" fill="#233a2c" />
-        <polygon points="180,410 340,480 180,560" fill="#122016" />
-        <polygon points="340,480 520,390 520,560 340,560" fill="#1c3122" />
-        <polygon points="520,390 700,490 520,560" fill="#0f1a11" />
-        <polygon points="700,490 880,400 880,560 700,560" fill="#233a2c" />
-        <polygon points="880,400 1080,500 880,560" fill="#122016" />
-        <polygon points="1080,500 1260,420 1260,560 1080,560" fill="#1c3122" />
-        <polygon points="1260,420 1440,480 1260,560" fill="#0f1a11" />
-      </g>
+    <!-- near mountains, gradient-faceted -->
+    <g class="day-only">
+      <polygon points="-40,520 90,400 160,460 230,380 320,460 410,520" fill="url(#coolDark)" />
+      <polygon points="-40,520 90,400 160,460" fill="url(#warmMid)" />
+      <polygon points="160,460 230,380 320,460" fill="url(#warmLight)" />
+      <polygon points="700,520 830,410 900,470 980,390 1080,470 1180,520" fill="url(#coolDark)" />
+      <polygon points="700,520 830,410 900,470" fill="url(#warmMid)" />
+      <polygon points="900,470 980,390 1080,470" fill="url(#warmLight)" />
+      <polygon points="1200,520 1310,420 1440,510 1440,520" fill="url(#coolShadow)" />
+    </g>
+    <g class="night-only">
+      <polygon points="-40,520 90,400 160,460 230,380 320,460 410,520" fill="url(#nCoolDark)" />
+      <polygon points="-40,520 90,400 160,460" fill="url(#nWarmMid)" />
+      <polygon points="160,460 230,380 320,460" fill="url(#nWarmLight)" />
+      <polygon points="700,520 830,410 900,470 980,390 1080,470 1180,520" fill="url(#nCoolDark)" />
+      <polygon points="700,520 830,410 900,470" fill="url(#nWarmMid)" />
+      <polygon points="900,470 980,390 1080,470" fill="url(#nWarmLight)" />
+      <polygon points="1200,520 1310,420 1440,510 1440,520" fill="url(#nCoolShadow)" />
     </g>
 
     <!-- tree ridge line -->
@@ -164,7 +190,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
     </g>
 
     <!-- tent -->
-    <g id="tent" transform="translate(920,0)">
+    <g id="tent" transform="translate(950,0)">
       <path d="M-20 580 L80 460 L180 580 Z" fill="url(#tentGrad)" />
       <path d="M40 580 L80 460 L120 580 Z" fill="#00000022" />
       <path d="M80 460 L80 580" stroke="#00000030" stroke-width="2" />
@@ -216,9 +242,9 @@ import LowPolyFigure from './LowPolyFigure.astro';
   >
     <LowPolyFigure
       id="hiker"
-      x={870}
+      x={790}
       y={605}
-      scale={2.3}
+      scale={2.05}
       flip={true}
       top="#d97a4d"
       topShade="#b85f37"
@@ -375,15 +401,14 @@ import LowPolyFigure from './LowPolyFigure.astro';
   .hero-panel {
     position: relative;
     z-index: 1;
-    background: rgba(255, 252, 244, 0.86);
-    backdrop-filter: blur(6px);
-    border: 2px solid var(--color-ink);
-    border-radius: var(--radius-lg);
-    padding: 2.25rem 2.5rem;
-    max-width: 560px;
-    margin-inline: 1.5rem;
-    box-shadow: var(--shadow-soft);
+    background: rgba(255, 252, 244, 0.94);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px -20px rgba(20, 20, 30, 0.35);
+    padding: 3rem 3rem 3rem 2.5rem;
+    max-width: 620px;
+    margin-inline: 1rem;
   }
+
 
   #flames {
     transform-origin: 0px 4px;
@@ -423,8 +448,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
 
   @media (max-width: 720px) {
     .hero-panel {
-      padding: 1.75rem;
-      margin-inline: 1rem;
+      padding: 2rem 1.5rem;
     }
 
     .hiker-svg {

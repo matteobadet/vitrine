@@ -38,7 +38,7 @@ const {
   topShade = '#b85f37',
   bottom = '#1c1a22',
   bottomShade = '#312e3a',
-  shoe = '#1c1a22',
+  shoe = '#241f2e',
   hair = '#2b2320',
   helmet = '',
   helmetShade = '',
@@ -54,6 +54,7 @@ const {
 } = Astro.props;
 
 const flipScale = flip ? -1 : 1;
+const g = (name: string) => `url(#${id}-${name})`;
 ---
 
 <g
@@ -61,16 +62,40 @@ const flipScale = flip ? -1 : 1;
   data-fig-id={id}
   transform={`translate(${x} ${y}) scale(${scale * flipScale} ${scale})`}
 >
+  <defs>
+    <linearGradient id={`${id}-skin`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color={skin} />
+      <stop offset="100%" stop-color={skinShade} />
+    </linearGradient>
+    <linearGradient id={`${id}-top`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color={top} />
+      <stop offset="100%" stop-color={topShade} />
+    </linearGradient>
+    <linearGradient id={`${id}-bottom`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color={bottom} />
+      <stop offset="100%" stop-color={bottomShade} />
+    </linearGradient>
+    <linearGradient id={`${id}-torso`} x1="0" y1="1" x2="0.6" y2="0">
+      <stop offset="0%" stop-color={topShade} />
+      <stop offset="100%" stop-color={top} />
+    </linearGradient>
+    {helmet && (
+      <linearGradient id={`${id}-helmet`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color={helmet} />
+        <stop offset="100%" stop-color={helmetShade || helmet} />
+      </linearGradient>
+    )}
+  </defs>
+
   <!-- back arm -->
   <g transform={`rotate(${armBackAngle})`}>
     <g class="fig-arm-back-pivot">
-      <polygon points="-3,0 3,0 4,22 -4,22" fill={top} />
-      <polygon points="0,0 3,0 4,22 0,22" fill={topShade} />
+      <rect x="-3.5" y="-1" width="7" height="24" rx="3.5" fill={g('top')} />
       <g transform="translate(0,22)">
         <g transform={`rotate(${forearmBackAngle})`}>
           <g class="fig-forearm-back-pivot">
-            <polygon points="-3,0 3,0 3,18 -3,18" fill={skin} />
-            <polygon points="0,0 3,0 3,18 0,18" fill={skinShade} />
+            <rect x="-3" y="-1" width="6" height="19" rx="3" fill={g('skin')} />
+            <circle cx="0" cy="19" r="3.4" fill={g('skin')} />
           </g>
         </g>
       </g>
@@ -80,14 +105,12 @@ const flipScale = flip ? -1 : 1;
   <!-- back leg -->
   <g transform={`rotate(${thighBackAngle})`}>
     <g class="fig-thigh-back-pivot">
-      <polygon points="-5,0 5,0 4,24 -4,24" fill={bottom} />
-      <polygon points="0,0 5,0 4,24 0,24" fill={bottomShade} />
+      <rect x="-5" y="-1" width="10" height="26" rx="4.5" fill={g('bottom')} />
       <g transform="translate(0,24)">
         <g transform={`rotate(${shinBackAngle})`}>
           <g class="fig-shin-back-pivot">
-            <polygon points="-3.5,0 3.5,0 3,25 -3,25" fill={bottom} />
-            <polygon points="0,0 3.5,0 3,25 0,25" fill={bottomShade} />
-            <polygon points="-3,24 3,24 11,28 11,32 -3,32" fill={shoe} />
+            <rect x="-4" y="-1" width="8" height="27" rx="3.5" fill={g('bottom')} />
+            <path d="M-3,23 Q-3,29 3,29 L12,31 Q13,33 11,34 L-4,34 Q-6,34 -6,31 Z" fill={shoe} />
           </g>
         </g>
       </g>
@@ -96,19 +119,17 @@ const flipScale = flip ? -1 : 1;
 
   <!-- torso -->
   <g class="fig-torso">
-    <polygon points="-8,-2 8,-2 15,-46 -7,-46" fill={top} />
-    <polygon points="0,-2 8,-2 15,-46 4,-46" fill={topShade} />
+    <path d="M-8,-2 Q-9,-24 -7,-46 L15,-46 Q17,-24 8,-2 Z" fill={g('torso')} />
 
-    <!-- head + optional helmet -->
+    <!-- head + face + optional helmet -->
     <g transform="translate(11,-46)">
-      <polygon points="-9,-17 9,-17 13,-6 8,4 -8,4 -13,-6" fill={skin} />
-      <polygon points="0,-17 9,-17 13,-6 8,4 0,4" fill={skinShade} />
-      <polygon points="-10,-17 10,-17 8,-24 -8,-24" fill={hair} />
+      <path d="M-13,-6 Q-13,-19 0,-19 Q13,-19 13,-6 L13,-2 Q13,5 4,5 L-8,5 Q-13,5 -13,-2 Z" fill={g('skin')} />
+      <circle cx="-3.5" cy="-6" r="1.4" fill="#2b2320" />
+      <circle cx="5" cy="-6" r="1.4" fill="#2b2320" />
+      <path d="M-2,0 Q2,2.4 6,0" stroke="#a9744e" stroke-width="1.1" fill="none" stroke-linecap="round" />
+      <path d="M-13,-9 Q-13,-22 0,-22 Q13,-22 13,-9 L13,-13 Q13,-19 0,-19 Q-13,-19 -13,-13 Z" fill={hair} />
       {helmet && (
-        <>
-          <polygon points="-12,-14 12,-14 10,-27 -10,-27" fill={helmet} />
-          <polygon points="0,-14 12,-14 10,-27 0,-27" fill={helmetShade || helmet} />
-        </>
+        <path d="M-14,-10 Q-14,-26 0,-26 Q14,-26 14,-10 L14,-15 Q14,-23 0,-23 Q-14,-23 -14,-15 Z" fill={g('helmet')} />
       )}
     </g>
 
@@ -116,13 +137,12 @@ const flipScale = flip ? -1 : 1;
     <g transform="translate(11,-42)">
       <g transform={`rotate(${armFrontAngle})`}>
         <g class="fig-arm-front-pivot">
-          <polygon points="-3,0 4,0 5,22 -4,22" fill={top} />
-          <polygon points="0.5,0 4,0 5,22 0.5,22" fill={topShade} />
+          <rect x="-3.5" y="-1" width="7" height="24" rx="3.5" fill={g('top')} />
           <g transform="translate(0,22)">
             <g transform={`rotate(${forearmFrontAngle})`}>
               <g class="fig-forearm-front-pivot">
-                <polygon points="-3.5,0 3.5,0 3,18 -3,18" fill={skin} />
-                <polygon points="0,0 3.5,0 3,18 0,18" fill={skinShade} />
+                <rect x="-3.2" y="-1" width="6.4" height="19" rx="3.2" fill={g('skin')} />
+                <circle cx="0" cy="19" r="3.6" fill={g('skin')} />
               </g>
             </g>
           </g>
@@ -134,14 +154,12 @@ const flipScale = flip ? -1 : 1;
   <!-- front leg (drawn last, in front) -->
   <g transform={`rotate(${thighFrontAngle})`}>
     <g class="fig-thigh-front-pivot">
-      <polygon points="-5,0 5,0 4,24 -4,24" fill={bottom} />
-      <polygon points="0,0 5,0 4,24 0,24" fill={bottomShade} />
+      <rect x="-5.2" y="-1" width="10.4" height="26" rx="4.8" fill={g('bottom')} />
       <g transform="translate(0,24)">
         <g transform={`rotate(${shinFrontAngle})`}>
           <g class="fig-shin-front-pivot">
-            <polygon points="-3.5,0 3.5,0 3,25 -3,25" fill={bottom} />
-            <polygon points="0,0 3.5,0 3,25 0,25" fill={bottomShade} />
-            <polygon points="-3,24 3,24 12,28 12,33 -3,33" fill={shoe} />
+            <rect x="-4.2" y="-1" width="8.4" height="27" rx="3.8" fill={g('bottom')} />
+            <path d="M-3.2,23 Q-3.2,30 3.2,30 L13,32 Q14,34 12,35 L-4.5,35 Q-6.5,35 -6.5,32 Z" fill={shoe} />
           </g>
         </g>
       </g>
