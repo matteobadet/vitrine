@@ -1,0 +1,164 @@
+<div class="climbing-scene" id="climbing-scene">
+  <svg
+    class="climbing-svg"
+    viewBox="0 0 1440 700"
+    preserveAspectRatio="xMidYMax slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="climbSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a9d3ee" />
+        <stop offset="100%" stop-color="#cfe6f4" />
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1440" height="700" fill="url(#climbSky)" />
+
+    <g fill="#7fb3d9" opacity="0.35">
+      <circle cx="60" cy="60" r="4" /><circle cx="160" cy="130" r="3" /><circle cx="260" cy="70" r="4" />
+      <circle cx="340" cy="180" r="3" /><circle cx="420" cy="90" r="4" /><circle cx="90" cy="240" r="3" />
+      <circle cx="200" cy="300" r="4" /><circle cx="480" cy="240" r="3" /><circle cx="40" cy="400" r="4" />
+      <circle cx="620" cy="60" r="3" /><circle cx="720" cy="150" r="4" /><circle cx="820" cy="80" r="3" />
+      <circle cx="900" cy="220" r="4" /><circle cx="1000" cy="120" r="3" /><circle cx="1100" cy="200" r="4" />
+      <circle cx="1200" cy="90" r="3" /><circle cx="1300" cy="180" r="4" /><circle cx="1380" cy="60" r="3" />
+      <circle cx="640" cy="320" r="4" /><circle cx="760" cy="380" r="3" /><circle cx="880" cy="330" r="4" />
+      <circle cx="1000" cy="400" r="3" /><circle cx="1150" cy="340" r="4" /><circle cx="1300" cy="420" r="3" />
+      <circle cx="520" cy="400" r="3" /><circle cx="300" cy="440" r="4" /><circle cx="120" cy="480" r="3" />
+    </g>
+
+    <g stroke="#c23b3b" stroke-width="6" fill="none" opacity="0.9">
+      <path d="M980 0 Q960 120 990 240 Q1010 340 985 460 Q970 540 995 620" />
+    </g>
+    <g stroke="#3a2f66" stroke-width="5" fill="none" opacity="0.85">
+      <path d="M1120 0 Q1145 140 1110 260 Q1090 360 1130 480" />
+    </g>
+
+    <g class="hold" fill="var(--color-amber)"><path d="M120 120 q22 -10 30 10 q6 16 -14 22 q-20 6 -24 -10 q-4 -14 8 -22z" /></g>
+    <g class="hold" fill="var(--color-terracotta)"><path d="M260 200 q20 -12 30 6 q8 14 -10 22 q-18 8 -26 -6 q-6 -12 6 -22z" /></g>
+    <g class="hold" fill="var(--color-sky)"><path d="M400 140 q22 -8 28 12 q4 16 -16 20 q-18 4 -22 -12 q-4 -14 10 -20z" /></g>
+    <g class="hold" fill="var(--color-amber)"><path d="M180 340 q20 -10 28 8 q6 14 -12 20 q-18 6 -24 -8 q-4 -12 8 -20z" /></g>
+    <g class="hold" fill="var(--color-terracotta)"><path d="M60 220 q18 -10 26 6 q6 12 -10 18 q-16 6 -22 -8 q-4 -10 6 -16z" /></g>
+    <g class="hold" fill="var(--color-primary)"><path d="M340 320 q20 -10 26 8 q6 14 -12 20 q-16 6 -22 -8 q-4 -12 8 -20z" /></g>
+    <g class="hold" fill="var(--color-sky)"><path d="M220 460 q22 -10 30 8 q6 16 -14 22 q-18 6 -24 -10 q-4 -12 8 -20z" /></g>
+
+    <g class="hold" fill="var(--color-terracotta)"><path d="M780 90 q22 -10 30 10 q6 16 -14 22 q-20 6 -24 -10 q-4 -14 8 -22z" /></g>
+    <g class="hold" fill="var(--color-amber)"><path d="M900 160 q20 -12 30 6 q8 14 -10 22 q-18 8 -26 -6 q-6 -12 6 -22z" /></g>
+    <g class="hold" fill="var(--color-primary)"><path d="M1050 100 q22 -8 28 12 q4 16 -16 20 q-18 4 -22 -12 q-4 -14 10 -20z" /></g>
+    <g class="hold" fill="var(--color-sky)"><path d="M1220 160 q20 -10 28 8 q6 14 -12 20 q-18 6 -24 -8 q-4 -12 8 -20z" /></g>
+    <g class="hold" fill="var(--color-terracotta)"><path d="M1340 250 q18 -10 26 6 q6 12 -10 18 q-16 6 -22 -8 q-4 -10 6 -16z" /></g>
+
+    <g id="climber-pos" transform="translate(960,220)">
+    <g id="climber" class="climber">
+      <path d="M-46 138 Q-30 150 -8 160 Q4 165 -2 180 Q-10 195 -26 188 Q-52 176 -66 156 Z" fill="#c23b3b" opacity="0.9" />
+
+      <g id="leg-left">
+        <path d="M0 130 Q-28 148 -40 178" stroke="url(#skinGrad2)" stroke-width="17" stroke-linecap="round" fill="none" />
+        <path d="M-40 178 l-16 10 l4 14 l20 -8 Z" fill="#1c1a22" />
+      </g>
+      <g id="leg-right">
+        <path d="M10 130 Q34 156 30 192" stroke="url(#skinGrad2)" stroke-width="17" stroke-linecap="round" fill="none" />
+        <path d="M30 192 l-10 16 l12 8 l12 -18 Z" fill="#1c1a22" />
+      </g>
+
+      <path d="M-24 78 Q6 62 34 80 L30 132 Q4 148 -22 130 Z" fill="#2f6b4f" />
+      <path d="M-24 78 Q-10 72 2 70 L0 100 Q-14 106 -22 116 Z" fill="#255943" />
+
+      <rect x="-24" y="118" width="58" height="16" rx="6" fill="#d97a4d" transform="rotate(4 5 126)" />
+      <circle cx="16" cy="127" r="4" fill="#1c1a22" />
+
+      <g id="arm-left">
+        <path d="M-20 84 Q-52 70 -64 34" stroke="url(#skinGrad2)" stroke-width="15" stroke-linecap="round" fill="none" />
+        <circle cx="-64" cy="34" r="8" fill="url(#skinGrad2)" />
+      </g>
+      <g id="arm-right">
+        <path d="M28 82 Q54 54 58 10" stroke="url(#skinGrad2)" stroke-width="15" stroke-linecap="round" fill="none" />
+        <circle cx="58" cy="10" r="8" fill="url(#skinGrad2)" />
+      </g>
+
+      <circle cx="6" cy="54" r="24" fill="url(#skinGrad2)" />
+      <path d="M-16 50 a22 22 0 0 1 44 -3 q-9 -8 -22 -8 t-22 8 q0 1.5 0 3z" fill="#1c1a22" />
+      <circle cx="-2" cy="54" r="2.4" fill="#1c1a22" />
+      <circle cx="12" cy="52" r="2.4" fill="#1c1a22" />
+      <path d="M-4 62 q10 4 18 -1" stroke="#1c1a22" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+      <defs>
+        <linearGradient id="skinGrad2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f2cda3" />
+          <stop offset="100%" stop-color="#dba877" />
+        </linearGradient>
+      </defs>
+
+      <g class="hold" fill="var(--color-amber)" transform="translate(-64,34)"><path d="M-20 -14 q22 -10 30 10 q6 16 -14 22 q-20 6 -24 -10 q-4 -14 8 -22z" /></g>
+      <g class="hold" fill="var(--color-sky)" transform="translate(58,10)"><path d="M-14 -10 q20 -10 28 8 q6 14 -12 20 q-18 6 -24 -8 q-4 -12 8 -20z" /></g>
+      <g class="hold" fill="var(--color-terracotta)" transform="translate(-40,178)"><path d="M0 0 q18 -10 26 6 q6 12 -10 18 q-16 6 -22 -8 q-4 -10 6 -16z" /></g>
+      <g class="hold" fill="var(--color-primary)" transform="translate(30,192)"><path d="M0 0 q20 -10 26 8 q6 14 -12 20 q-16 6 -22 -8 q-4 -12 8 -20z" /></g>
+    </g>
+    </g>
+  </svg>
+
+  <div class="hero-panel reveal">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .climbing-scene {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .climbing-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .hero-panel {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 252, 244, 0.86);
+    backdrop-filter: blur(6px);
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2.5rem;
+    max-width: 560px;
+    margin-inline: 1.5rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #arm-left { animation: reach-a 2.6s ease-in-out infinite; transform-origin: -20px 84px; }
+    #arm-right { animation: reach-b 2.3s ease-in-out infinite; transform-origin: 28px 82px; }
+    #leg-left { animation: reach-b 2.8s ease-in-out infinite; transform-origin: 0px 130px; }
+    #leg-right { animation: reach-a 2.4s ease-in-out infinite; transform-origin: 10px 130px; }
+    #climber-pos { animation: sway 4.5s ease-in-out infinite; }
+  }
+
+  @keyframes reach-a {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-5deg); }
+  }
+
+  @keyframes reach-b {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(5deg); }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: translate(960px, 220px) rotate(0deg); }
+    50% { transform: translate(960px, 220px) rotate(1.5deg); }
+  }
+
+  @media (max-width: 720px) {
+    .hero-panel {
+      padding: 1.75rem;
+      margin-inline: 1rem;
+    }
+  }
+</style>
