@@ -1,18 +1,28 @@
 <div class="climb-wall" id="climb-wall" aria-hidden="true">
-  <span class="hold" style="left:20%; top:6%; background:var(--color-terracotta); transform:rotate(12deg)"></span>
-  <span class="hold" style="left:65%; top:13%; background:var(--color-sky); transform:rotate(-18deg)"></span>
-  <span class="hold" style="left:35%; top:21%; background:var(--color-amber); transform:rotate(6deg)"></span>
-  <span class="hold" style="left:75%; top:29%; background:var(--color-primary); transform:rotate(-8deg)"></span>
-  <span class="hold" style="left:15%; top:37%; background:var(--color-sky); transform:rotate(20deg)"></span>
-  <span class="hold" style="left:55%; top:44%; background:var(--color-terracotta); transform:rotate(-14deg)"></span>
-  <span class="hold" style="left:30%; top:53%; background:var(--color-primary); transform:rotate(10deg)"></span>
-  <span class="hold" style="left:70%; top:60%; background:var(--color-amber); transform:rotate(-6deg)"></span>
-  <span class="hold" style="left:18%; top:68%; background:var(--color-sky); transform:rotate(16deg)"></span>
-  <span class="hold" style="left:60%; top:76%; background:var(--color-terracotta); transform:rotate(-20deg)"></span>
-  <span class="hold" style="left:38%; top:84%; background:var(--color-amber); transform:rotate(8deg)"></span>
-  <span class="hold" style="left:72%; top:91%; background:var(--color-primary); transform:rotate(-10deg)"></span>
+  <svg class="wall-texture" viewBox="0 0 340 900" preserveAspectRatio="none">
+    <path d="M40 0 Q80 120 30 260 Q90 380 50 520 Q100 640 40 780 Q80 860 30 900" stroke="#00000012" stroke-width="3" fill="none" />
+    <path d="M300 40 Q250 160 310 300 Q240 420 300 560 Q250 700 310 840" stroke="#00000010" stroke-width="3" fill="none" />
+    <path d="M180 0 L200 900" stroke="#ffffff14" stroke-width="2" />
+  </svg>
 
-  <svg id="climber" class="climber" viewBox="0 0 100 130" width="72" height="94">
+  <span class="hold hold-jug" style="left:22%; top:4%; background:var(--color-terracotta); transform:rotate(12deg)"></span>
+  <span class="hold hold-crimp" style="left:62%; top:9%; background:var(--color-sky); transform:rotate(-18deg)"></span>
+  <span class="hold hold-sloper" style="left:38%; top:15%; background:var(--color-amber); transform:rotate(6deg)"></span>
+  <span class="hold hold-crimp" style="left:78%; top:20%; background:var(--color-primary); transform:rotate(-8deg)"></span>
+  <span class="hold hold-jug" style="left:14%; top:25%; background:var(--color-sky); transform:rotate(20deg)"></span>
+  <span class="hold hold-sloper" style="left:52%; top:31%; background:var(--color-terracotta); transform:rotate(-14deg)"></span>
+  <span class="hold hold-crimp" style="left:30%; top:37%; background:var(--color-primary); transform:rotate(10deg)"></span>
+  <span class="hold hold-jug" style="left:70%; top:42%; background:var(--color-amber); transform:rotate(-6deg)"></span>
+  <span class="hold hold-sloper" style="left:18%; top:48%; background:var(--color-sky); transform:rotate(16deg)"></span>
+  <span class="hold hold-crimp" style="left:58%; top:54%; background:var(--color-terracotta); transform:rotate(-20deg)"></span>
+  <span class="hold hold-jug" style="left:36%; top:60%; background:var(--color-amber); transform:rotate(8deg)"></span>
+  <span class="hold hold-sloper" style="left:74%; top:66%; background:var(--color-primary); transform:rotate(-10deg)"></span>
+  <span class="hold hold-crimp" style="left:20%; top:72%; background:var(--color-terracotta); transform:rotate(14deg)"></span>
+  <span class="hold hold-jug" style="left:56%; top:78%; background:var(--color-sky); transform:rotate(-16deg)"></span>
+  <span class="hold hold-sloper" style="left:34%; top:85%; background:var(--color-amber); transform:rotate(9deg)"></span>
+  <span class="hold hold-jug" style="left:66%; top:92%; background:var(--color-primary); transform:rotate(-12deg)"></span>
+
+  <svg id="climber" class="climber" viewBox="0 0 100 130" width="112" height="146">
     <ellipse cx="50" cy="122" rx="26" ry="5" fill="var(--color-ink)" opacity="0.12" />
 
     <g id="climber-leg-left">
@@ -53,37 +63,58 @@
   .climb-wall {
     position: fixed;
     top: 84px;
-    right: 20px;
-    bottom: 20px;
-    width: 120px;
+    right: 28px;
+    bottom: 24px;
+    width: 300px;
     border-radius: var(--radius-lg);
     border: 2px solid var(--color-ink);
-    background: repeating-linear-gradient(
-        180deg,
-        #e4ddcb 0px,
-        #e4ddcb 38px,
-        #ddd5c0 38px,
-        #ddd5c0 40px
-      );
+    background:
+      radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.5), transparent 42%),
+      repeating-linear-gradient(180deg, #e4ddcb 0px, #e4ddcb 38px, #ddd5c0 38px, #ddd5c0 40px),
+      linear-gradient(180deg, #eae2cf 0%, #c7ba9c 100%);
     overflow: hidden;
     z-index: 5;
     box-shadow: var(--shadow-soft);
   }
 
+  .wall-texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .hold {
     position: absolute;
-    width: 20px;
-    height: 14px;
+    box-shadow: 0 3px 4px rgba(28, 26, 34, 0.3);
+  }
+
+  .hold-jug {
+    width: 30px;
+    height: 20px;
     border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
-    box-shadow: 0 2px 3px rgba(28, 26, 34, 0.25);
+  }
+
+  .hold-crimp {
+    width: 22px;
+    height: 11px;
+    border-radius: 3px;
+    clip-path: polygon(0% 100%, 15% 20%, 50% 0%, 85% 25%, 100% 100%);
+  }
+
+  .hold-sloper {
+    width: 26px;
+    height: 26px;
+    border-radius: 55% 45% 60% 40% / 45% 55% 45% 55%;
   }
 
   .climber {
     position: absolute;
     left: 50%;
-    margin-left: -36px;
+    margin-left: -56px;
     top: 0;
     will-change: transform;
+    filter: drop-shadow(0 6px 8px rgba(28, 26, 34, 0.2));
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -103,7 +134,7 @@
     50% { transform: rotate(6deg); }
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1300px) {
     .climb-wall {
       display: none;
     }
@@ -121,12 +152,12 @@
     const update = () => {
       ticking = false;
       const wallRect = wall.getBoundingClientRect();
-      const usable = wallRect.height - climber.clientHeight - 16;
+      const usable = wallRect.height - climber.clientHeight - 20;
       if (usable <= 0) return;
 
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
-      const y = usable - progress * usable + 8;
+      const y = usable - progress * usable + 10;
       climber.style.transform = `translateY(${y}px)`;
     };
 
