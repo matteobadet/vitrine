@@ -1,10 +1,9 @@
 ---
 export const prerender = true;
 
-import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import portrait from '../assets/matteo.jpg';
+import HikingScene from '../components/HikingScene.astro';
 
 const accents = ['terracotta', 'sky', 'amber', 'primary'] as const;
 
@@ -65,33 +64,19 @@ const projects = [
   title="Accueil"
   description="Portfolio de Matteo Badet — projets personnels : RandoHost, CycloTrack, SkillForge, ScrumMaster, ApexGrid, Arya Hub."
 >
-  <section class="section hero">
-    <span class="hero-shape" aria-hidden="true"></span>
-    <div class="container hero-grid">
-      <div class="reveal">
-        <h1>
-          Salut, je suis <span class="highlight">Matteo Badet</span> 👋
-        </h1>
-        <p class="hero-subtitle">
-          Développeur fullstack — C# / .NET côté API, TypeScript / Angular
-          (Nx) côté front.
-        </p>
-        <div class="hero-actions">
-          <a href="/contact" class="btn btn-primary">Me contacter</a>
-          <a href="/a-propos" class="btn btn-secondary">À propos de moi</a>
-        </div>
-      </div>
-      <div class="hero-portrait-wrap reveal" style="transition-delay: 0.1s">
-        <Image
-          src={portrait}
-          alt="Portrait de Matteo Badet"
-          width={280}
-          height={280}
-          class="hero-portrait"
-        />
-      </div>
+  <HikingScene>
+    <h1>
+      Salut, je suis <span class="highlight">Matteo Badet</span> 👋
+    </h1>
+    <p class="hero-subtitle">
+      Développeur fullstack — C# / .NET côté API, TypeScript / Angular
+      (Nx) côté front.
+    </p>
+    <div class="hero-actions">
+      <a href="/contact" class="btn btn-primary">Me contacter</a>
+      <a href="/a-propos" class="btn btn-secondary">À propos de moi</a>
     </div>
-  </section>
+  </HikingScene>
 
   <section class="section">
     <div class="container">
@@ -107,48 +92,9 @@ const projects = [
 </Layout>
 
 <style>
-  .hero {
-    position: relative;
-    padding-top: 5rem;
-    padding-bottom: 4rem;
-    overflow: hidden;
-  }
-
-  .hero-shape {
-    position: absolute;
-    top: -140px;
-    right: -120px;
-    width: 420px;
-    height: 420px;
-    border-radius: 50%;
-    background: var(--color-amber);
-    opacity: 0.18;
-    z-index: -1;
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .hero-portrait-wrap {
-    justify-self: end;
-  }
-
-  .hero-portrait {
-    display: block;
-    width: 220px;
-    height: 220px;
-    border-radius: var(--radius-lg);
-    object-fit: cover;
-    border: 3px solid var(--color-ink);
-  }
-
-  .hero h1 {
-    font-size: clamp(2.25rem, 5vw, 3.25rem);
-    max-width: 20ch;
+  h1 {
+    font-size: clamp(2rem, 4.2vw, 2.85rem);
+    max-width: 18ch;
   }
 
   .highlight::after {
@@ -183,16 +129,6 @@ const projects = [
   .project-grid > :global(.project-card:nth-child(6)) { transition-delay: 0.3s; }
 
   @media (max-width: 720px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-
-    .hero-portrait-wrap {
-      justify-self: center;
-      order: -1;
-    }
-
     .hero-actions {
       justify-content: center;
     }
