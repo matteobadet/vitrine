@@ -1,0 +1,149 @@
+<div class="climb-wall" id="climb-wall" aria-hidden="true">
+  <span class="hold" style="left:20%; top:6%; background:var(--color-terracotta); transform:rotate(12deg)"></span>
+  <span class="hold" style="left:65%; top:13%; background:var(--color-sky); transform:rotate(-18deg)"></span>
+  <span class="hold" style="left:35%; top:21%; background:var(--color-amber); transform:rotate(6deg)"></span>
+  <span class="hold" style="left:75%; top:29%; background:var(--color-primary); transform:rotate(-8deg)"></span>
+  <span class="hold" style="left:15%; top:37%; background:var(--color-sky); transform:rotate(20deg)"></span>
+  <span class="hold" style="left:55%; top:44%; background:var(--color-terracotta); transform:rotate(-14deg)"></span>
+  <span class="hold" style="left:30%; top:53%; background:var(--color-primary); transform:rotate(10deg)"></span>
+  <span class="hold" style="left:70%; top:60%; background:var(--color-amber); transform:rotate(-6deg)"></span>
+  <span class="hold" style="left:18%; top:68%; background:var(--color-sky); transform:rotate(16deg)"></span>
+  <span class="hold" style="left:60%; top:76%; background:var(--color-terracotta); transform:rotate(-20deg)"></span>
+  <span class="hold" style="left:38%; top:84%; background:var(--color-amber); transform:rotate(8deg)"></span>
+  <span class="hold" style="left:72%; top:91%; background:var(--color-primary); transform:rotate(-10deg)"></span>
+
+  <svg id="climber" class="climber" viewBox="0 0 100 130" width="72" height="94">
+    <ellipse cx="50" cy="122" rx="26" ry="5" fill="var(--color-ink)" opacity="0.12" />
+
+    <g id="climber-leg-left">
+      <path d="M46 78 Q30 92 22 112" stroke="url(#climberSkin)" stroke-width="11" stroke-linecap="round" fill="none" />
+      <circle cx="22" cy="112" r="6" fill="var(--color-ink)" />
+    </g>
+    <g id="climber-leg-right">
+      <path d="M54 78 Q68 90 78 106" stroke="url(#climberSkin)" stroke-width="11" stroke-linecap="round" fill="none" />
+      <circle cx="78" cy="106" r="6" fill="var(--color-ink)" />
+    </g>
+
+    <path d="M38 48 Q50 38 62 48 L60 82 Q50 92 40 82 Z" fill="var(--color-sky)" />
+
+    <g id="climber-arm-left">
+      <path d="M42 52 Q22 50 14 30" stroke="url(#climberSkin)" stroke-width="10" stroke-linecap="round" fill="none" />
+      <circle cx="14" cy="30" r="5.5" fill="url(#climberSkin)" />
+    </g>
+    <g id="climber-arm-right">
+      <path d="M58 52 Q78 46 86 24" stroke="url(#climberSkin)" stroke-width="10" stroke-linecap="round" fill="none" />
+      <circle cx="86" cy="24" r="5.5" fill="url(#climberSkin)" />
+    </g>
+
+    <circle cx="50" cy="30" r="16" fill="url(#climberSkin)" />
+    <path d="M35 28 a15 15 0 0 1 30 -2 q-7 -6 -15 -6 t-15 6 q0 1 0 2z" fill="var(--color-ink)" />
+    <circle cx="45" cy="30" r="1.8" fill="var(--color-ink)" />
+    <circle cx="55" cy="30" r="1.8" fill="var(--color-ink)" />
+
+    <defs>
+      <linearGradient id="climberSkin" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f2cda3" />
+        <stop offset="100%" stop-color="#dba877" />
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<style>
+  .climb-wall {
+    position: fixed;
+    top: 84px;
+    right: 20px;
+    bottom: 20px;
+    width: 120px;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-ink);
+    background: repeating-linear-gradient(
+        180deg,
+        #e4ddcb 0px,
+        #e4ddcb 38px,
+        #ddd5c0 38px,
+        #ddd5c0 40px
+      );
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hold {
+    position: absolute;
+    width: 20px;
+    height: 14px;
+    border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+    box-shadow: 0 2px 3px rgba(28, 26, 34, 0.25);
+  }
+
+  .climber {
+    position: absolute;
+    left: 50%;
+    margin-left: -36px;
+    top: 0;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #climber-arm-left { animation: reach-a 2.4s ease-in-out infinite; transform-origin: 42px 52px; }
+    #climber-arm-right { animation: reach-b 2.6s ease-in-out infinite; transform-origin: 58px 52px; }
+    #climber-leg-left { animation: reach-b 2.2s ease-in-out infinite; transform-origin: 46px 78px; }
+    #climber-leg-right { animation: reach-a 2.8s ease-in-out infinite; transform-origin: 54px 78px; }
+  }
+
+  @keyframes reach-a {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-6deg); }
+  }
+
+  @keyframes reach-b {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(6deg); }
+  }
+
+  @media (max-width: 1100px) {
+    .climb-wall {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const climber = document.getElementById('climber');
+  const wall = document.getElementById('climb-wall');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (climber && wall) {
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const wallRect = wall.getBoundingClientRect();
+      const usable = wallRect.height - climber.clientHeight - 16;
+      if (usable <= 0) return;
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+      const y = usable - progress * usable + 8;
+      climber.style.transform = `translateY(${y}px)`;
+    };
+
+    update();
+
+    if (!reduceMotion) {
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        },
+        { passive: true }
+      );
+      window.addEventListener('resize', update);
+    }
+  }
+</script>

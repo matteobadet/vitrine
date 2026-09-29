@@ -93,12 +93,12 @@
       <!-- shorts -->
       <path d="M306 414 Q343 398 384 414 L390 448 Q345 464 302 448 Z" fill="url(#shortsGrad)" />
 
-      <!-- off arm (tucked, behind torso) -->
-      <path d="M320 356 Q300 380 296 408" stroke="url(#skinGrad)" stroke-width="15" stroke-linecap="round" fill="none" />
-      <ellipse cx="295" cy="412" rx="8" ry="7" fill="url(#skinGrad)" />
-      <line x1="291" y1="417" x2="290" y2="423" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
-      <line x1="296" y1="419" x2="296" y2="426" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
-      <line x1="301" y1="417" x2="303" y2="423" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
+      <!-- off arm (tucked, behind torso), presenting the shuttle where the racket will meet it -->
+      <path d="M312 358 Q260 402 222 452" stroke="url(#skinGrad)" stroke-width="15" stroke-linecap="round" fill="none" />
+      <ellipse cx="218" cy="458" rx="8" ry="7" fill="url(#skinGrad)" />
+      <line x1="214" y1="463" x2="212" y2="469" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
+      <line x1="219" y1="465" x2="219" y2="472" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
+      <line x1="224" y1="463" x2="226" y2="469" stroke="url(#skinGrad)" stroke-width="3" stroke-linecap="round" />
 
       <!-- torso (forward lean) -->
       <path d="M300 346 Q340 328 374 348 L380 430 Q343 447 308 429 Z" fill="url(#shirtGrad)" />
@@ -132,12 +132,12 @@
     </g>
 
     <g id="shuttlecock">
-      <circle cx="296" cy="416" r="5" fill="var(--color-terracotta)" />
-      <path d="M296 416 L286 394 L306 394 Z" fill="#f4efe4" stroke="var(--color-ink)" stroke-width="1.8" />
+      <circle cx="218" cy="458" r="5" fill="var(--color-terracotta)" />
+      <path d="M218 458 L208 436 L228 436 Z" fill="#f4efe4" stroke="var(--color-ink)" stroke-width="1.8" />
     </g>
 
     <g id="impact-burst" opacity="0">
-      <path d="M296 416 l13 -8 M296 416 l16 6 M296 416 l-2 17 M296 416 l-15 -5" stroke="var(--color-amber)" stroke-width="4" stroke-linecap="round" />
+      <path d="M205 465 l13 -8 M205 465 l16 6 M205 465 l-2 17 M205 465 l-15 -5" stroke="var(--color-amber)" stroke-width="4" stroke-linecap="round" />
     </g>
   </svg>
 </div>
@@ -188,28 +188,28 @@
 
   @keyframes racket-swing {
     0% { transform: rotate(0deg); }
-    25% { transform: rotate(-14deg); }
-    55% { transform: rotate(68deg); }
-    80% { transform: rotate(88deg); }
+    15% { transform: rotate(-10deg); }
+    50% { transform: rotate(26deg); }
+    75% { transform: rotate(20deg); }
     100% { transform: rotate(0deg); }
   }
 
   @keyframes body-lean {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    55% { transform: translate(-4px, -3px) rotate(-2deg); }
-    80% { transform: translate(1px, 0) rotate(1deg); }
+    50% { transform: translate(-4px, -3px) rotate(-2deg); }
+    75% { transform: translate(1px, 0) rotate(1deg); }
   }
 
   @keyframes shuttle-fly {
-    0%, 50% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-    54% { opacity: 1; }
-    100% { transform: translate(-196px, -156px) rotate(-140deg); opacity: 0; }
+    0%, 46% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    50% { opacity: 1; }
+    100% { transform: translate(-150px, -190px) rotate(-140deg); opacity: 0; }
   }
 
   @keyframes burst-flash {
-    0%, 48% { opacity: 0; transform: scale(0.6); }
-    55% { opacity: 1; transform: scale(1.1); }
-    68% { opacity: 0; transform: scale(1.4); }
+    0%, 44% { opacity: 0; transform: scale(0.6); }
+    50% { opacity: 1; transform: scale(1.1); }
+    62% { opacity: 0; transform: scale(1.4); }
     100% { opacity: 0; }
   }
 
