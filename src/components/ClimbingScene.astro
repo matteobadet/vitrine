@@ -109,6 +109,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
     </g>
   </svg>
 
+  <div class="climber-offset">
   <g class="climber-wrap">
     <svg
       class="climber-svg"
@@ -137,6 +138,7 @@ import LowPolyFigure from './LowPolyFigure.astro';
       />
     </svg>
   </g>
+  </div>
 
   <div class="chalk-puff" aria-hidden="true"></div>
 
@@ -166,10 +168,15 @@ import LowPolyFigure from './LowPolyFigure.astro';
     z-index: -2;
   }
 
-  .climber-wrap {
+  .climber-offset {
     position: absolute;
     inset: 0;
     z-index: -1;
+  }
+
+  .climber-wrap {
+    position: absolute;
+    inset: 0;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -237,6 +244,17 @@ import LowPolyFigure from './LowPolyFigure.astro';
     padding: 3rem 3rem 3rem 2.5rem;
     max-width: 620px;
     margin-inline: 1rem;
+  }
+
+  @media (min-width: 721px) and (max-width: 920px) {
+    .hero-panel {
+      max-width: 460px;
+      padding: 2.5rem 2rem;
+    }
+
+    .climber-offset {
+      transform: translateX(8%);
+    }
   }
 
   @media (max-width: 720px) {
