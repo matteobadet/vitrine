@@ -87,7 +87,7 @@ function tent(x: number, base: number, w: number, h: number): { polys: Poly[]; r
     { pts: [D, DL, flap], mat: 'n', s: 0.98, a: 0 },
   ];
   const raw = `<ellipse cx="${x + w * 0.3}" cy="${base + 3}" rx="${w * 0.95}" ry="${h * 0.08}" fill="#10172a" opacity="0.28"/>`;
-  const ropes = `<g stroke="#2d2233" stroke-width="1.6" opacity="0.55"><line x1="${F[0]}" y1="${F[1]}" x2="${x - w * 0.85}" y2="${base + 6}"/><line x1="${B[0]}" y1="${B[1]}" x2="${x + w * 1.4}" y2="${base + 2}"/></g>`;
+  const ropes = `<g stroke="#2d2233" stroke-width="1.6" opacity="0.55"><line x1="${F[0]}" y1="${F[1]}" x2="${x - w * 0.62}" y2="${base + 4}"/><line x1="${B[0]}" y1="${B[1]}" x2="${x + w * 1.4}" y2="${base + 2}"/></g>`;
   return { polys, raw: raw + ropes };
 }
 
@@ -163,7 +163,7 @@ function lake(): Scene {
     seed: 21,
     mat: 'f',
     step: 52,
-    noise: 45,
+    noise: 14,
   });
   S.polys(far.polys);
   S.raw(haze(380, 200));
@@ -210,7 +210,7 @@ function lake(): Scene {
     seed: 41,
     mat: 'm',
     step: 44,
-    noise: 35,
+    noise: 12,
   });
   S.polys(midL.polys);
   const midR = mountainRange({
@@ -225,7 +225,7 @@ function lake(): Scene {
     seed: 42,
     mat: 'm',
     step: 44,
-    noise: 35,
+    noise: 12,
   });
   S.polys(midR.polys);
 
@@ -287,7 +287,7 @@ function lake(): Scene {
   // prairie de premier plan : haute a gauche (sous le texte), basse au centre, remonte a droite
   const fg = (x: number) => {
     if (x < 560) return 668 + (x / 560) * 42 + 8 * Math.sin(x / 70);
-    if (x < 1000) return 712 + 20 * Math.sin(((x - 560) / 440) * Math.PI);
+    if (x < 1000) return 712 + 32 * Math.sin(((x - 560) / 440) * Math.PI);
     return 712 - (x - 1000) * 0.14 + 6 * Math.sin(x / 55);
   };
   S.polys(band({ top: fg, x0: -20, x1: 1460, bottom: 812, step: 44, seed: 91, mat: 'g', depth: 16, noise: 40, rim: 70 }));
@@ -326,7 +326,7 @@ function summit(): Scene {
   const S = new Scene();
   S.raw(sky(['#5987dc', '#98afeb', '#dcbcdc', '#ffd4b2'], ['#050920', '#121943', '#262a5e', '#3b3469'], '#ffd8c2', '#34306a'));
   S.raw(sun(1060, 468, 50));
-  S.raw(moonStars(1190, 130, 110, 6, 470));
+  S.raw(moonStars(1370, 105, 110, 6, 470));
 
   const far = mountainRange({
     x0: -40,
@@ -347,12 +347,12 @@ function summit(): Scene {
     seed: 201,
     mat: 'f',
     step: 50,
-    noise: 45,
+    noise: 14,
   });
   S.polys(far.polys);
   S.raw(haze(360, 190));
 
-  S.polys(cloud(puffRow(-80, 1540, 430, 70, 38, 84, 211), 700, 212, 34), ' class="drift d3"');
+  S.polys(cloud(puffRow(-80, 1540, 430, 70, 38, 84, 211), 700, 212, 34, 'c', 0.5), ' class="drift d3"');
 
   const midA = mountainRange({
     x0: 480,
@@ -366,7 +366,7 @@ function summit(): Scene {
     seed: 221,
     mat: 'm',
     step: 40,
-    noise: 35,
+    noise: 12,
   });
   S.polys(midA.polys);
   const midB = mountainRange({
@@ -382,11 +382,11 @@ function summit(): Scene {
     seed: 222,
     mat: 'm',
     step: 40,
-    noise: 35,
+    noise: 12,
   });
   S.polys(midB.polys);
 
-  S.polys(cloud(puffRow(-80, 1540, 548, 70, 36, 80, 231), 800, 232, 32), ' class="drift"');
+  S.polys(cloud(puffRow(-80, 1540, 548, 70, 36, 80, 231), 800, 232, 32, 'c', 0.5), ' class="drift"');
 
   // arete sommitale au premier plan
   const ridge: Vec[] = [
@@ -482,7 +482,7 @@ function summit(): Scene {
   for (let i = 0; i < 3; i++) sway(S, lupin(220 + i * 40, 812, 110 + i * 25, 290 + i), 290 + i);
 
   S.raw(
-    `<g class="birds dn-day" fill="none" stroke="#3b3560" stroke-width="2" stroke-linecap="round"><path d="M700 250 q8 -8 16 0 q8 -8 16 0"/><path d="M745 228 q6 -6 12 0 q6 -6 12 0"/><path d="M660 276 q5 -5 10 0 q5 -5 10 0"/></g>`,
+    `<g class="birds dn-day" fill="none" stroke="#3b3560" stroke-width="2" stroke-linecap="round"><path d="M880 250 q8 -8 16 0 q8 -8 16 0"/><path d="M925 228 q6 -6 12 0 q6 -6 12 0"/><path d="M840 276 q5 -5 10 0 q5 -5 10 0"/></g>`,
   );
   return S;
 }
@@ -493,11 +493,11 @@ function summit(): Scene {
 function bivouac(): Scene {
   const S = new Scene();
   S.raw(sky(['#5a93e2', '#9fc2ef', '#d7d3ef', '#f6d4d0'], ['#050a1f', '#111a42', '#23285a', '#39336a'], '#f4d6dc', '#342f68'));
-  S.raw(sun(310, 150, 38));
-  S.raw(moonStars(300, 140, 100, 7, 420));
+  S.raw(sun(1300, 120, 36));
+  S.raw(moonStars(1300, 110, 100, 7, 420));
 
-  S.polys(cloud([{ x: 1060, y: 190, r: 30 }, { x: 1105, y: 172, r: 42 }, { x: 1155, y: 190, r: 30 }], 210, 311), ' class="drift"');
-  S.polys(cloud([{ x: 560, y: 238, r: 24 }, { x: 595, y: 226, r: 32 }, { x: 632, y: 240, r: 22 }], 256, 312), ' class="drift d2"');
+  S.polys(cloud([{ x: 1150, y: 230, r: 28 }, { x: 1192, y: 212, r: 40 }, { x: 1240, y: 230, r: 28 }], 250, 311), ' class="drift"');
+  S.polys(cloud([{ x: 780, y: 200, r: 24 }, { x: 815, y: 188, r: 32 }, { x: 852, y: 202, r: 22 }], 218, 312), ' class="drift d2"');
 
   const far = mountainRange({
     x0: -40,
@@ -516,7 +516,7 @@ function bivouac(): Scene {
     seed: 321,
     mat: 'f',
     step: 52,
-    noise: 45,
+    noise: 14,
   });
   S.polys(far.polys);
   S.raw(haze(380, 200));
@@ -553,7 +553,7 @@ function bivouac(): Scene {
     { pts: [[1016, 670], [1040, 668], [1036, 682], [1020, 684]], mat: 'o', s: 0.85, a: 1 },
     { pts: [[1046, 724], [1050, 690], [1040, 668], [1036, 700]], mat: 'o', s: 0.3, a: 0.3 },
   ]);
-  const fire = campfire(900, 742, 1.05);
+  const fire = campfire(900, 732, 1.05);
   S.raw(fire.under);
   S.polys(fire.stones);
   S.polys(fire.logs);
@@ -587,7 +587,10 @@ function bivouac(): Scene {
   return S;
 }
 
+// abscisse (repere 1440) a garder au centre quand l'ecran est plus etroit que la scene
+const FOCUS: Record<Variant, number> = { lake: 1060, summit: 1090, bivouac: 1010 };
+
 export function buildScene(v: Variant) {
   const S = v === 'lake' ? lake() : v === 'summit' ? summit() : bivouac();
-  return { svg: S.svg(), css: S.css() };
+  return { svg: S.svg(), css: S.css(), focus: FOCUS[v] };
 }

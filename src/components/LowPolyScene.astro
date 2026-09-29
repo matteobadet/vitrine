@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { variant, sparkTrigger = '' } = Astro.props;
-const { svg, css } = buildScene(variant);
+const { svg, css, focus } = buildScene(variant);
 ---
 
 <div class="lp-scene" id="lp-scene" data-mode="day">
@@ -32,11 +32,35 @@ const { svg, css } = buildScene(variant);
 
 <style is:inline set:html={css}></style>
 
-<script is:inline define:vars={{ sparkTrigger }}>
+<script is:inline define:vars={{ sparkTrigger, focus }}>
   (function () {
     var scene = document.getElementById('lp-scene');
     var toggle = document.getElementById('mode-toggle');
     if (!scene || !toggle) return;
+
+    // cadre la scene 1440x800 sur l'ecran : bas ancre, et si l'ecran est plus
+    // etroit que la scene, fenetre centree sur le point d'interet
+    var svg = scene.querySelector('.lp-svg');
+    function frame() {
+      var cw = scene.clientWidth;
+      var ch = scene.clientHeight;
+      if (!cw || !ch) return;
+      var ar = cw / ch;
+      var vb;
+      if (ar < 1440 / 800) {
+        var w = 800 * ar;
+        var x = Math.max(0, Math.min(1440 - w, focus - w / 2));
+        vb = x.toFixed(1) + ' 0 ' + w.toFixed(1) + ' 800';
+      } else {
+        var h = 1440 / ar;
+        vb = '0 ' + (800 - h).toFixed(1) + ' 1440 ' + h.toFixed(1);
+      }
+      svg.setAttribute('viewBox', vb);
+    }
+    frame();
+    if ('ResizeObserver' in window) new ResizeObserver(frame).observe(scene);
+    else window.addEventListener('resize', frame);
+
     try {
       if (localStorage.getItem('mbadet-hero-mode') === 'night') scene.dataset.mode = 'night';
     } catch (e) {}
@@ -63,12 +87,19 @@ const { svg, css } = buildScene(variant);
 <style>
   .lp-scene {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 67px);
+    min-height: calc(100svh - 67px);
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding-block: 5.5rem 3rem;
+    padding-block: 2rem;
     background: #a9b8ea;
+  }
+
+  @media (max-width: 900px) {
+    .lp-scene {
+      padding-block: 5.5rem 3rem;
+    }
   }
 
   .lp-svg {

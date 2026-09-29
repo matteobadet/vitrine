@@ -187,6 +187,9 @@ export interface Shape {
   bias?: number;
   gain?: number;
   jitter?: number;
+  // ombrer avec la pente au centre de la facette plutot qu'avec son plan :
+  // les faces entre deux aretes prennent une teinte nette et uniforme
+  centroidShade?: boolean;
 }
 
 export function facet(sh: Shape): Poly[] {
@@ -226,14 +229,22 @@ export function facet(sh: Shape): Poly[] {
     const cx = (A[0] + B[0] + C[0]) / 3;
     const cy = (A[1] + B[1] + C[1]) / 3;
     if (!inside(outline, cx, cy)) continue;
-    const za = sh.z(A[0], A[1]);
-    const zb = sh.z(B[0], B[1]);
-    const zc = sh.z(C[0], C[1]);
-    const u: V3 = [B[0] - A[0], B[1] - A[1], zb - za];
-    const v: V3 = [C[0] - A[0], C[1] - A[1], zc - za];
-    let nrm: V3 = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
-    if (nrm[2] < 0) nrm = [-nrm[0], -nrm[1], -nrm[2]];
-    nrm = norm3(nrm);
+    let nrm: V3;
+    if (sh.centroidShade) {
+      const e = 1.5;
+      const fx = (sh.z(cx + e, cy) - sh.z(cx - e, cy)) / (2 * e);
+      const fy = (sh.z(cx, cy + e) - sh.z(cx, cy - e)) / (2 * e);
+      nrm = norm3([-fx, -fy, 1]);
+    } else {
+      const za = sh.z(A[0], A[1]);
+      const zb = sh.z(B[0], B[1]);
+      const zc = sh.z(C[0], C[1]);
+      const u: V3 = [B[0] - A[0], B[1] - A[1], zb - za];
+      const v: V3 = [C[0] - A[0], C[1] - A[1], zc - za];
+      nrm = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+      if (nrm[2] < 0) nrm = [-nrm[0], -nrm[1], -nrm[2]];
+      nrm = norm3(nrm);
+    }
     const d = nrm[0] * LIGHT[0] + nrm[1] * LIGHT[1] + nrm[2] * LIGHT[2];
     const s = clamp01(bias + gain * (d - 0.55) + (r() - 0.5) * jit * 2);
     const a = sh.alt ? clamp01(sh.alt(cx, cy)) : 0;
@@ -283,8 +294,31 @@ export function mountainRange(o: {
     outline.push([x, o.base - Math.max(0, h + j)]);
   }
   outline.push([o.x1, o.base + 4]);
-  const nz = o.noise ?? 40;
-  const z = (x: number, y: number) => 1.35 * H(x) + 0.3 * (y - o.base) + (fbm(x / 140, y / 140, o.seed) - 0.5) * nz;
+  const nz = o.noise ?? 14;
+  // chaque sommet a une arete centrale et deux aretes diagonales : les faces
+  // entre deux aretes sont franchement eclairees ou a l'ombre
+  const rr = mulberry(o.seed + 13);
+  const ridges = o.peaks.flatMap((p) => {
+    const T: Vec = [p.x, o.base - p.h];
+    const aL = -(0.5 + rr() * 0.35);
+    const aR = 0.45 + rr() * 0.35;
+    return [
+      { T, d: [0, 1] as Vec, L: p.h * 1.4, h: p.h * 1.35, k: p.k * 1.35 },
+      { T, d: [Math.sin(aL), Math.cos(aL)] as Vec, L: p.h * 1.3, h: p.h * 1.24, k: p.k * 1.6 },
+      { T, d: [Math.sin(aR), Math.cos(aR)] as Vec, L: p.h * 1.3, h: p.h * 1.24, k: p.k * 1.6 },
+    ];
+  });
+  const z = (x: number, y: number) => {
+    let m = -Infinity;
+    for (const rd of ridges) {
+      const qx = x - rd.T[0];
+      const qy = y - rd.T[1];
+      const t = Math.max(0, Math.min(rd.L, qx * rd.d[0] + qy * rd.d[1]));
+      const v = rd.h - Math.hypot(qx - t * rd.d[0], qy - t * rd.d[1]) * rd.k + t * 0.3;
+      if (v > m) m = v;
+    }
+    return m + (fbm(x / 140, y / 140, o.seed) - 0.5) * nz;
+  };
   const polys = facet({
     outline,
     step: o.step,
@@ -294,7 +328,8 @@ export function mountainRange(o: {
     alt: (_x, y) => (o.base - y) / maxH,
     bias: o.bias,
     gain: o.gain,
-    jitter: 0.025,
+    jitter: 0.07,
+    centroidShade: true,
   });
   return { polys, outline };
 }
@@ -305,7 +340,7 @@ export interface Puff {
   r: number;
 }
 
-export function cloud(puffs: Puff[], flat: number, seed: number, step = 20, mat = 'c'): Poly[] {
+export function cloud(puffs: Puff[], flat: number, seed: number, step = 20, mat = 'c', gain = 0.9): Poly[] {
   const top = Math.min(...puffs.map((p) => p.y - p.r));
   const x0 = Math.min(...puffs.map((p) => p.x - p.r));
   const x1 = Math.max(...puffs.map((p) => p.x + p.r));
@@ -336,8 +371,8 @@ export function cloud(puffs: Puff[], flat: number, seed: number, step = 20, mat 
     mat,
     seed,
     alt: (_x, y) => (flat - y) / (flat - top),
-    bias: 0.6,
-    gain: 0.9,
+    bias: 0.62,
+    gain,
   });
 }
 
@@ -544,8 +579,8 @@ const MATS: Record<string, Mat> = {
   // nuages
   c: {
     day: [
-      ['#8292d0', '#9eade0', '#bcc6ec', '#d9dff6', '#f2f4fd'],
-      ['#a998d2', '#caadd8', '#e9c3d6', '#f9d8d6', '#fff1ea'],
+      ['#8aa0d6', '#a6b9e4', '#c3d1ef', '#dfe7f7', '#f4f7fd'],
+      ['#b3c1e8', '#cdd8f1', '#e5ecf8', '#f5f7fc', '#ffffff'],
     ],
     night: [
       ['#1a1f40', '#232a50', '#2f3763', '#3c4577', '#4b558a'],
@@ -599,8 +634,8 @@ const MATS: Record<string, Mat> = {
   // roche
   r: {
     day: [
-      ['#4f4a6c', '#686284', '#857c9e', '#a597b4', '#c4b4c9'],
-      ['#63587a', '#857491', '#ae93a8', '#d4b3b3', '#f0d2c4'],
+      ['#3a2f3f', '#4e4152', '#665566', '#7f6a78', '#9a8290'],
+      ['#47384a', '#624d5d', '#826672', '#a5857f', '#c6a58e'],
     ],
     night: [
       ['#0f1128', '#161933', '#1e2240', '#282d50', '#343a62'],
