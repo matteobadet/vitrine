@@ -66,7 +66,21 @@ const projects = [
 >
   <HikingScene>
     <h1>
-      Salut, je suis <span class="highlight">Matteo Badet</span> 👋
+      Salut, je suis <span class="highlight">Matteo Badet</span>
+      <svg class="wave-icon" viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">
+        <defs>
+          <linearGradient id="waveSkin" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f2cda3" />
+            <stop offset="100%" stop-color="#dba877" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M20 44 Q14 44 12 38 L10 24 Q9 20 12 19 Q15 18 16 22 L17 28 L17 12 Q17 8 20 8 Q23 8 23 12 L23 24 L24 9 Q24 5 27 5 Q30 5 30 9 L30 24 L31 11 Q31 7 34 7 Q37 7 37 11 L37 26 Q40 25 41 28 Q42 31 40 34 L36 42 Q33 44 28 44 Z"
+          fill="url(#waveSkin)"
+          stroke="var(--color-ink)"
+          stroke-width="1"
+        />
+      </svg>
     </h1>
     <p class="hero-subtitle">
       Développeur fullstack — C# / .NET côté API, TypeScript / Angular
@@ -95,6 +109,26 @@ const projects = [
   h1 {
     font-size: clamp(2rem, 4.2vw, 2.85rem);
     max-width: 18ch;
+  }
+
+  .wave-icon {
+    display: inline-block;
+    vertical-align: -0.2em;
+    transform-origin: 50% 90%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .wave-icon {
+      animation: wave 2.2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(16deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(16deg); }
+    40% { transform: rotate(-4deg); }
   }
 
   .highlight::after {
