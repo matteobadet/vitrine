@@ -24,13 +24,20 @@
   .climbing-bg {
     position: absolute;
     top: 0;
+    bottom: 0;
+    left: 38%;
     right: 0;
-    height: 100%;
     width: auto;
-    max-width: none;
-    object-fit: contain;
-    object-position: right center;
-    z-index: -1;
+    height: 100%;
+    object-fit: cover;
+    object-position: 75% 40%;
+  }
+
+  @media (max-width: 720px) {
+    .climbing-bg {
+      left: 0;
+      opacity: 0.35;
+    }
   }
 
   .hero-panel {
