@@ -1,12 +1,6 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
-
-const svgPath = path.resolve('public/illustrations/cycling.svg');
-const svgRaw = fs.readFileSync(svgPath, 'utf-8');
-const cyclistInner = svgRaw
-  .replace(/^[\s\S]*?<svg[^>]*>/, '')
-  .replace(/<\/svg>\s*$/, '');
+import LowPolyFigure from './LowPolyFigure.astro';
+import LowPolyBike from './LowPolyBike.astro';
 ---
 
 <div class="cycling-scene" id="cycling-scene">
@@ -22,10 +16,6 @@ const cyclistInner = svgRaw
         <stop offset="0%" stop-color="#bcd4f2" />
         <stop offset="100%" stop-color="#eef4f7" />
       </linearGradient>
-
-      <symbol id="cyclist-figure" viewBox="42 5 361 318">
-        <Fragment set:html={cyclistInner} />
-      </symbol>
     </defs>
 
     <rect x="0" y="0" width="1440" height="560" fill="url(#cycSky)" />
@@ -66,10 +56,60 @@ const cyclistInner = svgRaw
     <rect x="0" y="550" width="1440" height="150" fill="#4a4570" />
   </svg>
 
-  <svg class="rider rider-3" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
-  <svg class="rider rider-2" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
+  <svg class="rider rider-3" viewBox="-45 -75 105 140" aria-hidden="true" focusable="false">
+    <LowPolyBike frame="#1c1a22" wheelAnim="wheel-c" />
+    <LowPolyFigure
+      id="rider3"
+      x={0}
+      y={0}
+      scale={1}
+      top="#2f6b4f"
+      topShade="#204a37"
+      helmet="#1c1a22"
+      motionClass="fig-pedal-c"
+      armFrontAngle={-65}
+      forearmFrontAngle={-15}
+      armBackAngle={-60}
+      forearmBackAngle={-10}
+    />
+  </svg>
+
+  <svg class="rider rider-2" viewBox="-45 -75 105 140" aria-hidden="true" focusable="false">
+    <LowPolyBike frame="#1c1a22" wheelAnim="wheel-b" />
+    <LowPolyFigure
+      id="rider2"
+      x={0}
+      y={0}
+      scale={1}
+      top="#3a8fd9"
+      topShade="#2a6ba8"
+      helmet="#1c1a22"
+      motionClass="fig-pedal-b"
+      armFrontAngle={-65}
+      forearmFrontAngle={-15}
+      armBackAngle={-60}
+      forearmBackAngle={-10}
+    />
+  </svg>
+
   <div class="rider-pos-1">
-    <svg class="rider rider-1" viewBox="42 5 361 318" aria-hidden="true" focusable="false"><use href="#cyclist-figure"></use></svg>
+    <svg class="rider rider-1" viewBox="-45 -75 105 140" aria-hidden="true" focusable="false">
+      <LowPolyBike frame="#1c1a22" wheelAnim="wheel-a" />
+      <LowPolyFigure
+        id="rider1"
+        x={0}
+        y={0}
+        scale={1}
+        top="#d97a4d"
+        topShade="#b85f37"
+        helmet="#e0a83a"
+        motionClass="fig-pedal-a"
+        armFrontAngle={-65}
+        forearmFrontAngle={-15}
+        armBackAngle={-60}
+        forearmBackAngle={-10}
+      />
+    </svg>
     <div class="streaks" id="streaks"></div>
   </div>
 
@@ -110,29 +150,28 @@ const cyclistInner = svgRaw
     position: absolute;
     width: 220px;
     height: auto;
-    aspect-ratio: 361 / 318;
     overflow: visible;
     filter: drop-shadow(0 8px 6px rgba(20, 15, 40, 0.25));
   }
 
   .rider-3 {
-    left: 4%;
-    top: 60%;
-    width: 170px;
+    left: 48%;
+    top: 62%;
+    width: 150px;
     transform: scaleX(-1);
   }
 
   .rider-2 {
-    left: 33%;
-    top: 57%;
-    width: 195px;
+    left: 60%;
+    top: 59%;
+    width: 180px;
     transform: scaleX(-1);
   }
 
   .rider-pos-1 {
     position: absolute;
-    left: 60%;
-    top: 58%;
+    left: 76%;
+    top: 56%;
   }
 
   .rider-1 {
@@ -182,38 +221,51 @@ const cyclistInner = svgRaw
     box-shadow: var(--shadow-soft);
   }
 
-  /* --- pedalage : rotation des roues, du pedalier et des jambes autour de
-     leurs pivots reels, mesures sur l'illustration source (cycling.svg) --- */
+  /* --- pedalage : jambes riggees avec pivots hanche/genou reels (IK),
+     roues qui tournent en continu --- */
   @media (prefers-reduced-motion: no-preference) {
-    :global(#cyclist-figure #rueda_delante) {
-      transform-origin: 120.6px 229.2px;
-      animation: spin-wheel 0.55s linear infinite;
+    :global(.wheel) {
+      animation: spin-wheel 0.6s linear infinite;
+    }
+    :global(.wheel-b) { animation-delay: -0.15s; }
+    :global(.wheel-c) { animation-delay: -0.3s; }
+
+    :global(.fig-pedal-a .fig-thigh-front-pivot),
+    :global(.fig-pedal-b .fig-thigh-front-pivot),
+    :global(.fig-pedal-c .fig-thigh-front-pivot) {
+      transform-origin: 0px 0px;
+      animation: thigh-front 1.05s linear infinite;
+    }
+    :global(.fig-pedal-a .fig-shin-front-pivot),
+    :global(.fig-pedal-b .fig-shin-front-pivot),
+    :global(.fig-pedal-c .fig-shin-front-pivot) {
+      transform-origin: 0px 0px;
+      animation: shin-front 1.05s linear infinite;
+    }
+    :global(.fig-pedal-a .fig-thigh-back-pivot),
+    :global(.fig-pedal-b .fig-thigh-back-pivot),
+    :global(.fig-pedal-c .fig-thigh-back-pivot) {
+      transform-origin: 0px 0px;
+      animation: thigh-back 1.05s linear infinite;
+    }
+    :global(.fig-pedal-a .fig-shin-back-pivot),
+    :global(.fig-pedal-b .fig-shin-back-pivot),
+    :global(.fig-pedal-c .fig-shin-back-pivot) {
+      transform-origin: 0px 0px;
+      animation: shin-back 1.05s linear infinite;
     }
 
-    :global(#cyclist-figure #rueda_atras) {
-      transform-origin: 323.5px 248.1px;
-      animation: spin-wheel 0.55s linear infinite;
+    :global(.fig-pedal-b .fig-thigh-front-pivot),
+    :global(.fig-pedal-b .fig-shin-front-pivot),
+    :global(.fig-pedal-b .fig-thigh-back-pivot),
+    :global(.fig-pedal-b .fig-shin-back-pivot) {
+      animation-delay: -0.15s;
     }
-
-    :global(#cyclist-figure #pedal) {
-      transform-origin: 216.9px 258.6px;
-      animation: spin-wheel 1s linear infinite;
-    }
-
-    :global(#cyclist-figure #pierna_delante),
-    :global(#cyclist-figure #calcetin_delante),
-    :global(#cyclist-figure #bota_delante) {
-      transform-box: fill-box;
-      transform-origin: 50% 50%;
-      animation: pedal-front 1s ease-in-out infinite;
-    }
-
-    :global(#cyclist-figure #pierna_atras),
-    :global(#cyclist-figure #calcetin_atras),
-    :global(#cyclist-figure #pie_atras) {
-      transform-box: fill-box;
-      transform-origin: 50% 50%;
-      animation: pedal-back 1s ease-in-out infinite;
+    :global(.fig-pedal-c .fig-thigh-front-pivot),
+    :global(.fig-pedal-c .fig-shin-front-pivot),
+    :global(.fig-pedal-c .fig-thigh-back-pivot),
+    :global(.fig-pedal-c .fig-shin-back-pivot) {
+      animation-delay: -0.3s;
     }
   }
 
@@ -222,14 +274,49 @@ const cyclistInner = svgRaw
     to { transform: rotate(360deg); }
   }
 
-  @keyframes pedal-front {
-    0%, 100% { transform: rotate(-6deg); }
-    50% { transform: rotate(6deg); }
+  @keyframes thigh-front {
+    0% { transform: rotate(-28.7deg); }
+    12.5% { transform: rotate(-32.9deg); }
+    25% { transform: rotate(-44.6deg); }
+    37.5% { transform: rotate(-63.4deg); }
+    50% { transform: rotate(-82.9deg); }
+    62.5% { transform: rotate(-83deg); }
+    75% { transform: rotate(-65.3deg); }
+    87.5% { transform: rotate(-42deg); }
+    100% { transform: rotate(-28.7deg); }
   }
-
-  @keyframes pedal-back {
-    0%, 100% { transform: rotate(6deg); }
-    50% { transform: rotate(-6deg); }
+  @keyframes shin-front {
+    0% { transform: rotate(32.1deg); }
+    12.5% { transform: rotate(57.6deg); }
+    25% { transform: rotate(87.9deg); }
+    37.5% { transform: rotate(111.2deg); }
+    50% { transform: rotate(115deg); }
+    62.5% { transform: rotate(96.4deg); }
+    75% { transform: rotate(67.1deg); }
+    87.5% { transform: rotate(38.2deg); }
+    100% { transform: rotate(32.1deg); }
+  }
+  @keyframes thigh-back {
+    0% { transform: rotate(-82.9deg); }
+    12.5% { transform: rotate(-83deg); }
+    25% { transform: rotate(-65.3deg); }
+    37.5% { transform: rotate(-42deg); }
+    50% { transform: rotate(-28.7deg); }
+    62.5% { transform: rotate(-32.9deg); }
+    75% { transform: rotate(-44.6deg); }
+    87.5% { transform: rotate(-63.4deg); }
+    100% { transform: rotate(-82.9deg); }
+  }
+  @keyframes shin-back {
+    0% { transform: rotate(115deg); }
+    12.5% { transform: rotate(96.4deg); }
+    25% { transform: rotate(67.1deg); }
+    37.5% { transform: rotate(38.2deg); }
+    50% { transform: rotate(32.1deg); }
+    62.5% { transform: rotate(57.6deg); }
+    75% { transform: rotate(87.9deg); }
+    87.5% { transform: rotate(111.2deg); }
+    100% { transform: rotate(115deg); }
   }
 
   .cycling-scene.is-attacking .rider-pos-1 {
@@ -241,8 +328,8 @@ const cyclistInner = svgRaw
   }
 
   @keyframes attack {
-    0% { left: 60%; top: 58%; transform: scale(1); }
-    100% { left: 98%; top: 48%; transform: scale(1.35); }
+    0% { left: 76%; top: 56%; transform: scale(1); }
+    100% { left: 99%; top: 46%; transform: scale(1.35); }
   }
 
   @keyframes streak-flash {
@@ -258,8 +345,13 @@ const cyclistInner = svgRaw
     }
 
     .rider {
-      width: 130px !important;
+      width: 110px !important;
+      opacity: 0.55;
     }
+
+    .rider-3 { left: 6%; top: 66%; }
+    .rider-2 { left: 32%; top: 63%; }
+    .rider-pos-1 { left: 60%; top: 60%; }
   }
 </style>
 

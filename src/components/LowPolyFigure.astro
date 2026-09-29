@@ -1,0 +1,150 @@
+---
+interface Props {
+  id: string;
+  x: number;
+  y: number;
+  scale?: number;
+  flip?: boolean;
+  skin?: string;
+  skinShade?: string;
+  top?: string;
+  topShade?: string;
+  bottom?: string;
+  bottomShade?: string;
+  shoe?: string;
+  hair?: string;
+  helmet?: string;
+  helmetShade?: string;
+  motionClass?: string;
+  armFrontAngle?: number;
+  armBackAngle?: number;
+  forearmFrontAngle?: number;
+  forearmBackAngle?: number;
+  thighFrontAngle?: number;
+  thighBackAngle?: number;
+  shinFrontAngle?: number;
+  shinBackAngle?: number;
+}
+
+const {
+  id,
+  x,
+  y,
+  scale = 1,
+  flip = false,
+  skin = '#e8b48a',
+  skinShade = '#cf9a6f',
+  top = '#d97a4d',
+  topShade = '#b85f37',
+  bottom = '#1c1a22',
+  bottomShade = '#312e3a',
+  shoe = '#1c1a22',
+  hair = '#2b2320',
+  helmet = '',
+  helmetShade = '',
+  motionClass = '',
+  armFrontAngle = 0,
+  armBackAngle = 0,
+  forearmFrontAngle = 0,
+  forearmBackAngle = 0,
+  thighFrontAngle = 0,
+  thighBackAngle = 0,
+  shinFrontAngle = 0,
+  shinBackAngle = 0,
+} = Astro.props;
+
+const flipScale = flip ? -1 : 1;
+---
+
+<g
+  class={`fig ${motionClass}`}
+  data-fig-id={id}
+  transform={`translate(${x} ${y}) scale(${scale * flipScale} ${scale})`}
+>
+  <!-- back arm -->
+  <g transform={`rotate(${armBackAngle})`}>
+    <g class="fig-arm-back-pivot">
+      <polygon points="-3,0 3,0 4,22 -4,22" fill={top} />
+      <polygon points="0,0 3,0 4,22 0,22" fill={topShade} />
+      <g transform="translate(0,22)">
+        <g transform={`rotate(${forearmBackAngle})`}>
+          <g class="fig-forearm-back-pivot">
+            <polygon points="-3,0 3,0 3,18 -3,18" fill={skin} />
+            <polygon points="0,0 3,0 3,18 0,18" fill={skinShade} />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- back leg -->
+  <g transform={`rotate(${thighBackAngle})`}>
+    <g class="fig-thigh-back-pivot">
+      <polygon points="-5,0 5,0 4,24 -4,24" fill={bottom} />
+      <polygon points="0,0 5,0 4,24 0,24" fill={bottomShade} />
+      <g transform="translate(0,24)">
+        <g transform={`rotate(${shinBackAngle})`}>
+          <g class="fig-shin-back-pivot">
+            <polygon points="-3.5,0 3.5,0 3,25 -3,25" fill={bottom} />
+            <polygon points="0,0 3.5,0 3,25 0,25" fill={bottomShade} />
+            <polygon points="-3,24 3,24 11,28 11,32 -3,32" fill={shoe} />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- torso -->
+  <g class="fig-torso">
+    <polygon points="-8,-2 8,-2 15,-46 -7,-46" fill={top} />
+    <polygon points="0,-2 8,-2 15,-46 4,-46" fill={topShade} />
+
+    <!-- head + optional helmet -->
+    <g transform="translate(11,-46)">
+      <polygon points="-9,-17 9,-17 13,-6 8,4 -8,4 -13,-6" fill={skin} />
+      <polygon points="0,-17 9,-17 13,-6 8,4 0,4" fill={skinShade} />
+      <polygon points="-10,-17 10,-17 8,-24 -8,-24" fill={hair} />
+      {helmet && (
+        <>
+          <polygon points="-12,-14 12,-14 10,-27 -10,-27" fill={helmet} />
+          <polygon points="0,-14 12,-14 10,-27 0,-27" fill={helmetShade || helmet} />
+        </>
+      )}
+    </g>
+
+    <!-- front arm (drawn after torso so it sits on top) -->
+    <g transform="translate(11,-42)">
+      <g transform={`rotate(${armFrontAngle})`}>
+        <g class="fig-arm-front-pivot">
+          <polygon points="-3,0 4,0 5,22 -4,22" fill={top} />
+          <polygon points="0.5,0 4,0 5,22 0.5,22" fill={topShade} />
+          <g transform="translate(0,22)">
+            <g transform={`rotate(${forearmFrontAngle})`}>
+              <g class="fig-forearm-front-pivot">
+                <polygon points="-3.5,0 3.5,0 3,18 -3,18" fill={skin} />
+                <polygon points="0,0 3.5,0 3,18 0,18" fill={skinShade} />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- front leg (drawn last, in front) -->
+  <g transform={`rotate(${thighFrontAngle})`}>
+    <g class="fig-thigh-front-pivot">
+      <polygon points="-5,0 5,0 4,24 -4,24" fill={bottom} />
+      <polygon points="0,0 5,0 4,24 0,24" fill={bottomShade} />
+      <g transform="translate(0,24)">
+        <g transform={`rotate(${shinFrontAngle})`}>
+          <g class="fig-shin-front-pivot">
+            <polygon points="-3.5,0 3.5,0 3,25 -3,25" fill={bottom} />
+            <polygon points="0,0 3.5,0 3,25 0,25" fill={bottomShade} />
+            <polygon points="-3,24 3,24 12,28 12,33 -3,33" fill={shoe} />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</g>

@@ -1,3 +1,7 @@
+---
+import LowPolyFigure from './LowPolyFigure.astro';
+---
+
 <div class="hiking-scene" id="hiking-scene" data-mode="day">
   <button type="button" id="mode-toggle" class="mode-toggle" aria-label="Basculer jour / nuit">
     <span class="mode-icon day-only" aria-hidden="true">☀️</span>
@@ -203,7 +207,28 @@
     </g>
   </svg>
 
-  <img src="/illustrations/hiker.svg" alt="" aria-hidden="true" class="hiker" />
+  <svg
+    class="hiker-svg"
+    viewBox="0 0 1440 700"
+    preserveAspectRatio="xMidYMax slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <LowPolyFigure
+      id="hiker"
+      x={870}
+      y={605}
+      scale={2.3}
+      flip={true}
+      top="#d97a4d"
+      topShade="#b85f37"
+      bottom="#3a3660"
+      bottomShade="#252140"
+      motionClass="fig-walk"
+      forearmFrontAngle={15}
+      forearmBackAngle={15}
+    />
+  </svg>
 
   <div class="hero-panel reveal">
     <slot />
@@ -219,33 +244,93 @@
     overflow: hidden;
   }
 
-  .hiking-svg {
+  .hiking-svg,
+  .hiker-svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .hiking-svg {
     z-index: -1;
   }
 
-  .hiker {
-    position: absolute;
-    right: 9%;
-    bottom: 7%;
-    width: 130px;
-    height: auto;
+  .hiker-svg {
+    z-index: 0;
     filter: drop-shadow(0 8px 6px rgba(20, 15, 40, 0.3));
   }
 
+  /* --- marche : jambes et bras riggees, rotation autour des articulations
+     reelles (hanche/genou/epaule) --- */
   @media (prefers-reduced-motion: no-preference) {
-    .hiker {
-      animation: walk-bob 0.7s ease-in-out infinite;
-      transform-origin: 50% 100%;
+    :global(.fig-walk .fig-thigh-front-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-thigh-f 0.9s ease-in-out infinite;
+    }
+    :global(.fig-walk .fig-shin-front-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-shin-f 0.9s ease-in-out infinite;
+    }
+    :global(.fig-walk .fig-thigh-back-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-thigh-b 0.9s ease-in-out infinite;
+    }
+    :global(.fig-walk .fig-shin-back-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-shin-b 0.9s ease-in-out infinite;
+    }
+    :global(.fig-walk .fig-arm-front-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-arm-f 0.9s ease-in-out infinite;
+    }
+    :global(.fig-walk .fig-arm-back-pivot) {
+      transform-origin: 0px 0px;
+      animation: walk-arm-b 0.9s ease-in-out infinite;
     }
   }
 
-  @keyframes walk-bob {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-4px) rotate(-1.2deg); }
+  @keyframes walk-thigh-f {
+    0% { transform: rotate(-30deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(30deg); }
+    75% { transform: rotate(0deg); }
+    100% { transform: rotate(-30deg); }
+  }
+  @keyframes walk-shin-f {
+    0% { transform: rotate(10deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(45deg); }
+    100% { transform: rotate(10deg); }
+  }
+  @keyframes walk-thigh-b {
+    0% { transform: rotate(30deg); }
+    25% { transform: rotate(0deg); }
+    50% { transform: rotate(-30deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(30deg); }
+  }
+  @keyframes walk-shin-b {
+    0% { transform: rotate(10deg); }
+    25% { transform: rotate(45deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(10deg); }
+  }
+  @keyframes walk-arm-f {
+    0% { transform: rotate(15deg); }
+    25% { transform: rotate(0deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(2.5deg); }
+    100% { transform: rotate(15deg); }
+  }
+  @keyframes walk-arm-b {
+    0% { transform: rotate(-15deg); }
+    25% { transform: rotate(2.5deg); }
+    50% { transform: rotate(15deg); }
+    75% { transform: rotate(0deg); }
+    100% { transform: rotate(-15deg); }
   }
 
   .night-only { display: none; }
@@ -342,11 +427,8 @@
       margin-inline: 1rem;
     }
 
-    .hiker {
-      width: 92px;
-      right: 4%;
-      bottom: 8%;
-      opacity: 0.4;
+    .hiker-svg {
+      opacity: 0.45;
     }
   }
 </style>

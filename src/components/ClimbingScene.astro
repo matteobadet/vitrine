@@ -1,3 +1,7 @@
+---
+import LowPolyFigure from './LowPolyFigure.astro';
+---
+
 <div class="climbing-scene">
   <svg
     class="climbing-svg"
@@ -24,24 +28,65 @@
       <ellipse cx="580" cy="105" rx="45" ry="16" />
     </g>
 
-    <g id="cliff-back" fill="#4d78b0" opacity="0.55">
-      <polygon points="0,480 160,300 340,480" />
+    <g id="cliff-back" fill="#4d78b0" opacity="0.5">
       <polygon points="260,480 420,240 620,480" />
       <polygon points="520,480 700,320 880,480" />
     </g>
 
-    <g id="cliff-front" fill="#35507d" opacity="0.65">
-      <polygon points="-40,520 140,340 320,520" />
-      <polygon points="220,520 440,280 700,520" />
+    <!-- rock face: low-poly faceted cliff the figure climbs -->
+    <polygon points="600,700 560,540 660,460 610,340 700,260 650,140 740,40 780,-10 1440,-10 1440,700" fill="#8a8f7d" />
+    <g opacity="0.85">
+      <polygon points="600,700 560,540 660,460 660,700" fill="#767b69" />
+      <polygon points="660,460 610,340 700,260 700,460" fill="#9a9f8c" />
+      <polygon points="700,260 650,140 740,40 740,260" fill="#767b69" />
+      <polygon points="740,40 780,-10 900,-10 900,300 740,260" fill="#9a9f8c" />
+    </g>
+    <g stroke="#5c6152" stroke-width="3" fill="none" opacity="0.5">
+      <path d="M690,600 620,560 680,500" />
+      <path d="M780,420 720,390 760,330" />
+      <path d="M820,220 760,190 800,120" />
+    </g>
+
+    <!-- climbing holds -->
+    <g class="holds">
+      <polygon points="900,180 924,168 936,192 916,210 892,200" fill="#d97a4d" />
+      <polygon points="780,300 800,288 812,308 794,322 775,314" fill="#e0a83a" />
+      <polygon points="950,380 972,372 982,394 962,408 942,398" fill="#3a8fd9" />
+      <polygon points="820,470 842,462 852,482 834,496 814,486" fill="#2f6b4f" />
+      <polygon points="1020,260 1040,252 1050,272 1032,286 1014,276" fill="#e0a83a" />
+      <polygon points="1060,460 1082,452 1092,474 1072,488 1052,478" fill="#d97a4d" />
+      <polygon points="880,560 902,552 912,572 894,586 874,576" fill="#3a8fd9" />
     </g>
   </svg>
 
-  <img
-    src="/illustrations/climbing.svg"
-    alt=""
-    aria-hidden="true"
-    class="climbing-bg"
-  />
+  <g class="climber-wrap">
+    <svg
+      class="climber-svg"
+      viewBox="0 0 1440 700"
+      preserveAspectRatio="xMidYMax slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <LowPolyFigure
+        id="climber"
+        x={850}
+        y={430}
+        scale={2.4}
+        top="#3a8fd9"
+        topShade="#2a6ba8"
+        bottom="#1c1a22"
+        bottomShade="#312e3a"
+        armFrontAngle={165}
+        forearmFrontAngle={15}
+        armBackAngle={-70}
+        forearmBackAngle={60}
+        thighFrontAngle={-130}
+        shinFrontAngle={90}
+        thighBackAngle={-15}
+        shinBackAngle={20}
+      />
+    </svg>
+  </g>
 
   <div class="chalk-puff" aria-hidden="true"></div>
 
@@ -59,17 +104,32 @@
     overflow: hidden;
   }
 
-  .climbing-svg {
+  .climbing-svg,
+  .climber-svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .climbing-svg {
     z-index: -2;
+  }
+
+  .climber-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .cloud { animation: drift 55s linear infinite; }
     .cloud-2 { animation-duration: 70s; animation-delay: -25s; }
+
+    .climber-wrap {
+      animation: sway 6s ease-in-out infinite;
+      transform-origin: 70% 65%;
+    }
   }
 
   @keyframes drift {
@@ -78,35 +138,15 @@
     100% { transform: translateX(0); }
   }
 
-  .climbing-bg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 38%;
-    right: 0;
-    width: auto;
-    height: 100%;
-    object-fit: cover;
-    object-position: 75% 40%;
-    z-index: -1;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .climbing-bg {
-      animation: sway 6s ease-in-out infinite;
-      transform-origin: 50% 100%;
-    }
-  }
-
   @keyframes sway {
     0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(-0.4deg); }
+    50% { transform: translateY(-4px) rotate(-0.6deg); }
   }
 
   .chalk-puff {
     position: absolute;
-    left: 87%;
-    top: 20%;
+    left: 67%;
+    top: 26%;
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -129,9 +169,8 @@
   }
 
   @media (max-width: 720px) {
-    .climbing-bg {
-      left: 0;
-      opacity: 0.35;
+    .climber-wrap {
+      opacity: 0.5;
     }
 
     .chalk-puff {
