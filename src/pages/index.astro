@@ -12,7 +12,7 @@ const projects = [
   {
     name: 'RandoHost',
     description:
-      'Gestion de médias (photos/vidéos) géolocalisés pour randonneurs : carte interactive, albums partagés et rôles par groupe.',
+      'Vos photos et vidéos de rando, placées sur la carte. Albums partagés avec le groupe, et des droits différents selon le rôle de chacun.',
     url: 'https://randohost.mbadet.fr',
     status: 'live' as const,
     tags: ['React', 'ASP.NET Core', 'PostgreSQL'],
@@ -20,7 +20,7 @@ const projects = [
   {
     name: 'CycloTrack',
     description:
-      'Suivi d’activités vélo avec coaching par IA — application mobile, web et API dédiée.',
+      'Le suivi de vos sorties vélo, avec un coach IA qui analyse vos activités. Application mobile, site web et API maison.',
     url: 'https://cyclotrack.mbadet.fr',
     status: 'live' as const,
     tags: ['React Native', 'React', 'ASP.NET Core'],
@@ -28,7 +28,7 @@ const projects = [
   {
     name: 'SkillForge',
     description:
-      'Plateforme auto-hébergée pour partager des Skills, MCP et Agents Claude au sein d’un cercle d’amis.',
+      'Une bibliothèque privée pour s’échanger Skills, MCP et Agents Claude entre amis. Auto-hébergée sur mon propre cluster.',
     url: 'https://skillforge.mbadet.fr',
     status: 'live' as const,
     tags: ['React', 'ASP.NET Core', 'Kubernetes'],
@@ -36,7 +36,7 @@ const projects = [
   {
     name: 'ScrumMaster',
     description:
-      'Outil de facilitation agile (mêlées, rétrospectives) intégré à Microsoft Teams et connecté à Azure DevOps Boards.',
+      'Pour animer mêlées et rétrospectives sans quitter Microsoft Teams, avec Azure DevOps Boards branché directement dessus.',
     url: 'https://scrummaster.mbadet.fr',
     status: 'live' as const,
     tags: ['C#', 'Microsoft Teams', 'Azure DevOps'],
@@ -44,7 +44,7 @@ const projects = [
   {
     name: 'ApexGrid',
     description:
-      'Simulateur de course top-down où les voitures sont pilotées uniquement par des scripts externes via un protocole TCP/WebSocket documenté.',
+      'Un simulateur de course vu du dessus où personne ne tient le volant : les voitures obéissent à vos scripts, via un protocole TCP/WebSocket documenté.',
     url: 'https://apexgrid.mbadet.fr',
     status: 'live' as const,
     tags: ['TypeScript', 'Node.js', 'WebSocket'],
@@ -52,7 +52,7 @@ const projects = [
   {
     name: 'Arya Hub',
     description:
-      'Tableau de bord d’équipe pour piloter des agents Claude Code sur des projets réels — sessions en direct, approbations humaines, intégration Azure DevOps (work items, PR, pipelines).',
+      'Le poste de pilotage d’une équipe qui travaille avec des agents Claude Code : sessions en direct, validation humaine des actions, et Azure DevOps intégré (work items, PR, pipelines).',
     url: 'https://aryahub.mbadet.fr',
     status: 'live' as const,
     tags: ['Angular', 'Fastify', 'PostgreSQL', 'Claude Agent SDK'],
@@ -83,8 +83,9 @@ const projects = [
       </svg>
     </h1>
     <p class="hero-subtitle">
-      Développeur fullstack — C# / .NET côté API, TypeScript / Angular
-      (Nx) côté front.
+      Développeur fullstack à Dijon. J’écris des API en C# / .NET, des
+      interfaces en TypeScript / Angular, et je monte mes projets perso
+      en dehors du boulot.
     </p>
     <div class="hero-actions">
       <a href="/contact" class="btn btn-primary">Me contacter</a>
@@ -95,7 +96,7 @@ const projects = [
   <section class="section">
     <div class="container">
       <p class="eyebrow reveal">Portfolio</p>
-      <h2 class="reveal">Mes projets</h2>
+      <h2 class="reveal">Ce que je construis</h2>
       <div class="project-grid">
         {projects.map((project, i) => (
           <ProjectCard {...project} accent={accents[i % accents.length]} />
